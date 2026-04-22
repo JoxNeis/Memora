@@ -8,10 +8,15 @@ const problemSet = quiz.getProblems();
 let current_problems = null;
 //#endregion
 
+//#region ELEMENT
+
+//#endregion
+
+
 //#region FUNCTION
 //#region QUIZ
 function loadQuiz() {
-  const retrieved = sessionStorage.getItem("quiz_data");
+  const retrieved = sessionStorage.getItem("current_quiz");
   if (!retrieved) {
     window.location.href = "upload.html";
   }

@@ -17,6 +17,9 @@ upload_zone.addEventListener("click", () => file_input.click());
 file_input.addEventListener("change", (e) => {
   receiveFile(e);
 });
+start_button.addEventListener("click",(e)=>{
+  startQuiz();
+})
 //#endregion
 
 //#region FUNCTION
@@ -55,5 +58,10 @@ function handleFile(file) {
     }
   };
   reader.readAsText(file);
+}
+
+function startQuiz(){
+  console.log("Start Quiz!");
+  window.location.href = "quiz.html";
 }
 //#endregion
