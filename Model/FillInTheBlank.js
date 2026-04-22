@@ -3,8 +3,9 @@ import Problem from './Problem.js';
 class FillInTheBlank extends Problem {
 
   //#region CONSTRUCTOR
-  constructor(id, text, answer) {
+  constructor(id, text, answer,explanation) {
     super(id, text, answer);
+    this.explanation = explanation;
   }
   //#endregion
 
@@ -25,14 +26,20 @@ class FillInTheBlank extends Problem {
 
   //#region JSON
   toJSON() {
-    return super.toJSON();
+    const base = super.toJSON();
+
+    return {
+      ...base,
+      explanation: this.explanation
+    };
   }
 
   static fromJSON(json) {
     return new FillInTheBlank(
       json.id,
       json.text,
-      json.answer
+      json.answer,
+      json.explanation
     );
   }
   //#endregion

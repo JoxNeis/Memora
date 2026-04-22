@@ -28,7 +28,7 @@ class Problem {
       id: this.id,
       text: this.text,
       type: this.type,
-      answer: this.answer
+      answer: this.answer,
     };
   }
 

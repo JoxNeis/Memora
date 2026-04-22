@@ -6,27 +6,51 @@ class Quiz {
   constructor(
     name,
     problemSet,
+    duration,
     config = {}
   ) {
 
     this.name = name;
     this.problemSet = problemSet;
-
+    this.duration = duration;
+    this.quizStart = Date.now();
+    this.quizEnd =
+      this.quizStart +
+      (duration * 1000);
     this.config = {
       randomizeProblem:
         config.randomizeProblem ?? false,
-
       problemCount:
         config.problemCount ??
         this.problemSet.problems.length
+
     };
 
   }
   //#endregion
 
 
-  //#region PROBLEMS
 
+  //#region TIME
+  getRemainingTime() {
+    const now = Date.now();
+    const remaining =
+      this.quizEnd - now;
+    return Math.max(
+      0,
+      Math.floor(remaining / 1000)
+    );
+  }
+
+
+  isTimeUp() {
+    return Date.now() >= this.quizEnd;
+  }
+  //#endregion
+
+
+
+  //#region PROBLEM
   getProblems() {
 
     let problems =
@@ -45,11 +69,16 @@ class Quiz {
 
   }
 
+
   shuffle(array) {
 
     let arr = [...array];
 
-    for (let i = arr.length - 1; i > 0; i--) {
+    for (
+      let i = arr.length - 1;
+      i > 0;
+      i--
+    ) {
 
       const j = Math.floor(
         Math.random() * (i + 1)
@@ -67,18 +96,20 @@ class Quiz {
   //#endregion
 
 
+
   //#region JSON
 
   toJSON() {
-
     return {
       name: this.name,
+      duration: this.duration,
       config: this.config,
       problemSet:
         this.problemSet.toJSON()
     };
 
   }
+
 
   static fromJSON(json) {
 
@@ -87,14 +118,16 @@ class Quiz {
         json.problemSet
       );
 
-    return new Quiz(
-      json.name,
-      problemSet,
-      json.config
-    );
+    const quiz =
+      new Quiz(
+        json.name,
+        problemSet,
+        json.duration,
+        json.config
+      );
+    return quiz;
 
   }
-
-  //#endregion
 }
+
 export default Quiz;
