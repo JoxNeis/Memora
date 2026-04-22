@@ -1,6 +1,6 @@
 class Problem {
   //#region CONSTRUCTOR
-  constructor(id, text, answer) {
+  constructor(id, text, key, answer) {
     if (this.constructor === Problem) {
       throw new Error("Abstract classes can't be instantiated.");
     }
@@ -35,6 +35,7 @@ class Problem {
   static fromJSON(json) {
     this.id = json.id;
     this.text = json.text;
+    this.type = json.type;
     this.answer = json.answer;
   }
   //#endregion

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Memora - Upload</title>
+    <link rel="stylesheet" href="../Assets/Styles/modal.css">
+</head>
+
+<body>
+    <header>
+        <h1>Memora</h1>
+    </header>
+    <main>
+        <section class="container">
+            <div class="upload" id="upload-zone">
+                <h2>
+                    Import
+                </h2>
+                <p>
+                    Drop your JSON Quiz here<br>
+                    or click to browse
+                </p>
+                <input type="file" id="import-file" accept=".json">
+            </div>
+            <button id="btn-start">
+                Start Quiz
+            </button>
+            <button id="btn-download-template">
+                Download Template
+            </button>
+        </section>
+        <div id="modal-container"></div>
+    </main>
+    <footer>
+        Created by JoxNeis
+    </footer>
+</body>
+<script src="../Scripts/modal.js">
+</script>
+<script  type="module" src="../Scripts/upload.js">
+</script>
+</html>

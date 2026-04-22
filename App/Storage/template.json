@@ -1,0 +1,75 @@
+{
+  "name": "Sample Quiz",
+  "duration": 300,
+  "config": {
+    "randomizeProblem": true,
+    "problemCount": 3
+  },
+  "problemSet": {
+    "problems": [
+      {
+        "id": 1,
+        "type": "MultipleChoice",
+        "text": "What is the capital of France?",
+        "answer": "A",
+        "option": [
+          {
+            "id": "A",
+            "text": "Paris",
+            "explanation": "Correct! Paris is the capital and largest city of France."
+          },
+          {
+            "id": "B",
+            "text": "London",
+            "explanation": "London is the capital of the United Kingdom, not France."
+          },
+          {
+            "id": "C",
+            "text": "Berlin",
+            "explanation": "Berlin is the capital of Germany."
+          },
+          {
+            "id": "D",
+            "text": "Madrid",
+            "explanation": "Madrid is the capital of Spain."
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "type": "MultipleAnswer",
+        "text": "Which of the following are programming languages? (Select all that apply)",
+        "answer": ["A", "C", "D"],
+        "option": [
+          {
+            "id": "A",
+            "text": "Python",
+            "explanation": "Yes, Python is a popular high-level programming language."
+          },
+          {
+            "id": "B",
+            "text": "HTML",
+            "explanation": "HTML is a markup language, not a programming language."
+          },
+          {
+            "id": "C",
+            "text": "JavaScript",
+            "explanation": "Yes, JavaScript is a widely-used programming language."
+          },
+          {
+            "id": "D",
+            "text": "Rust",
+            "explanation": "Yes, Rust is a systems programming language."
+          }
+        ]
+      },
+      {
+        "id": 3,
+        "type": "FillInTheBlank",
+        "text": "The chemical symbol for water is ___.",
+        "answer": ["H2O", "h2o"],
+        "explanation": "Water's chemical formula is H₂O — two hydrogen atoms bonded to one oxygen atom."
+      }
+    ]
+  }
+}

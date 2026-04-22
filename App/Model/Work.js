@@ -3,8 +3,8 @@ import Answer from './Answer.js';
 class Work {
 
   //#region CONSTRUCTOR
-  constructor(answers = []) {
-    this.answers = answers;
+  constructor(answersSheet = []) {
+    this.answersSheet = answersSheet;
   }
   //#endregion
 
@@ -12,21 +12,25 @@ class Work {
   //#region ANSWER MANAGEMENT
 
   addAnswer(answer) {
-    this.answers.push(answer);
+    this.answersSheet.push(answer);
   }
 
   getAnswer(problemId) {
 
-    return this.answers.find(
+    return this.answersSheet.find(
       a => a.problemId === problemId
     );
 
   }
 
+  findAnswer(problemId){
+    return this.answersSheet.find((a) => a.problemId === problemId);
+  }
+
   removeAnswer(problemId) {
 
-    this.answers =
-      this.answers.filter(
+    this.answersSheet =
+      this.answersSheet.filter(
         a => a.problemId !== problemId
       );
 
@@ -39,8 +43,8 @@ class Work {
   toJSON() {
 
     return {
-      answers:
-        this.answers.map(
+      answersSheet:
+        this.answersSheet.map(
           a => a.toJSON()
         )
     };
@@ -49,12 +53,12 @@ class Work {
 
   static fromJSON(json) {
 
-    const answers =
-      json.answers.map(a =>
+    const answersSheet =
+      json.answersSheet.map(a =>
         Answer.fromJSON(a)
       );
 
-    return new Work(answers);
+    return new Work(answersSheet);
 
   }
 
