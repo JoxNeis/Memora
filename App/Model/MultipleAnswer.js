@@ -1,19 +1,19 @@
-import Problem from './Problem.js';
-import Option from './Option.js';
+import Problem from "./Problem.js";
+import Option from "./Option.js";
 
 class MultipleAnswer extends Problem {
   //#region CONSTRUCTOR
   constructor(id, text, option, answer) {
     super(id, text, answer);
 
-    this.option = option; 
+    this.option = option;
   }
   //#endregion
 
   //#region DISPLAY
   display() {
     let display = `<form id="q${this.id}">`;
-
+    display += `<p>${this.text}</p>`;
     this.option.forEach((opt) => {
       display += `
         <label>
@@ -37,21 +37,14 @@ class MultipleAnswer extends Problem {
 
     return {
       ...base,
-      option: this.option.map(opt => opt.toJSON())
+      option: this.option.map((opt) => opt.toJSON()),
     };
   }
 
   static fromJSON(json) {
-    const options = json.option.map(optJson =>
-      Option.fromJSON(optJson)
-    );
+    const options = json.option.map((optJson) => Option.fromJSON(optJson));
 
-    return new MultipleAnswer(
-      json.id,
-      json.text,
-      options,
-      json.answer
-    );
+    return new MultipleAnswer(json.id, json.text, options, json.answer);
   }
   //#endregion
 }

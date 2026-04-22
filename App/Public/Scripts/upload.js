@@ -1,69 +1,91 @@
 import Quiz from "../../Model/Quiz.js";
 
-document.addEventListener("DOMContentLoaded", () => {
-  //#region GET ELEMENT
-  const button_download_template = document.getElementById(
-    "btn-download-template",
-  );
-  const upload_zone = document.getElementById("upload-zone");
-  const file_input = document.getElementById("import-file");
-  const start_button = document.getElementById("btn-start");
-  //#endregion
+document.addEventListener("DOMContentLoaded", init);
 
-  //#region EVENT LISTENER
-  button_download_template.addEventListener("click", () => {
-    downloadTemplate();
-  });
-  upload_zone.addEventListener("click", () => file_input.click());
-  file_input.addEventListener("change", (e) => {
-    receiveFile(e);
-  });
-  start_button.addEventListener("click", (e) => {
-    startQuiz();
-  });
-  //#endregion
+function init() {
+  const el = {
+    btnDownload: document.getElementById("btn-download-template"),
+    uploadZone: document.getElementById("upload-zone"),
+    fileInput: document.getElementById("import-file"),
+    btnStart: document.getElementById("btn-start"),
+    loadedInfo: document.getElementById("loaded-info"),
+  };
 
-  //#region FUNCTION
+  el.btnDownload.addEventListener("click", downloadTemplate);
+  el.uploadZone.addEventListener("click", () => el.fileInput.click());
+  el.fileInput.addEventListener("change", receiveFile);
+  el.btnStart.addEventListener("click", startQuiz);
+
   function downloadTemplate() {
-    const template_json = document.createElement("a");
-    template_json.href = "../../storage/template.json";
-    template_json.download = "memora-quiz-template.json";
-    document.body.appendChild(template_json);
-    template_json.click();
-    document.body.removeChild(template_json);
+    const link = document.createElement("a");
+
+    link.href = "../../storage/template.json";
+
+    link.download = "memora-quiz-template.json";
+
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   }
 
   function receiveFile(e) {
     const file = e.target.files[0];
-    if (file) handleFile(file);
+
+    if (file) {
+      handleFile(file);
+    }
   }
 
   function handleFile(file) {
-    if (!file.name.endsWith(".json")) {
-      showErrorModal("Invalid File Format", "File must be a json");
+    if (!isJsonFile(file)) {
+      showErrorModal("Invalid File Format", "File must be a JSON");
+
       return;
     }
     const reader = new FileReader();
-    reader.onload = (e) => {
-      try {
-        const json = JSON.parse(e.target.result);
-        const quiz = Quiz.fromJSON(json);
-        sessionStorage.setItem("current_quiz", JSON.stringify(json));
-      } catch (err) {
-        showErrorModal(
-          "Invalid JSON Format",
-          "Invalid JSON format: " + err.message,
-        );
-        start_button.disabled = true;
-        document.getElementById("loaded-info").style.display = "none";
-      }
-    };
+    reader.onload = handleFileLoad;
     reader.readAsText(file);
   }
 
+  function handleFileLoad(e) {
+    try {
+      const json = JSON.parse(e.target.result);
+      validateQuiz(json);
+      sessionStorage.setItem("current_quiz", JSON.stringify(json));
+      enableStart();
+    } catch (err) {
+      showErrorModal(
+        "Invalid JSON Format",
+        "Invalid JSON format: " + err.message,
+      );
+      disableStart();
+    }
+  }
+
+  function validateQuiz(json) {
+    // Ensures Quiz format is valid
+    Quiz.fromJSON(json);
+  }
+
+  function isJsonFile(file) {
+    return file.name.toLowerCase().endsWith(".json");
+  }
+
+  function enableStart() {
+    el.btnStart.disabled = false;
+    if (el.loadedInfo) {
+      el.loadedInfo.style.display = "block";
+    }
+  }
+
+  function disableStart() {
+    el.btnStart.disabled = true;
+    if (el.loadedInfo) {
+      el.loadedInfo.style.display = "none";
+    }
+  }
+
   function startQuiz() {
-    console.log("Start Quiz!");
     window.location.href = "quiz.html";
   }
-  //#endregion
-});
+}

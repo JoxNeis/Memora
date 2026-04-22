@@ -13,7 +13,7 @@ class MultipleChoice extends Problem {
   //#region DISPLAY
   display() {
     let display = `<form id="q${this.id}">`;
-
+    display += `<p>${this.text}</p>`;
     this.option.forEach((opt) => {
       display += `
         <label>

@@ -1,45 +1,79 @@
 import Quiz from "../../Model/Quiz.js";
 import Work from "../../Model/Work.js";
+import Answer from "../../Model/Answer.js";
 
-document.addEventListener("DOMContentLoaded", () => {
-  //#region FIELDS
+document.addEventListener("DOMContentLoaded", init);
+
+//#region INIT
+function init() {
   const quiz = loadQuiz();
   const work = new Work();
   const problemSet = quiz.getProblems();
-  let current_problems = null;
-  //#endregion
 
-  //#region ELEMENT
+  let currentIndex = 0;
 
-  //#endregion
+  const el = {
+    problem: document.getElementById("problem"),
+    currentLabel: document.getElementById("current-problem"),
+    totalLabel: document.getElementById("total-problem"),
+    btnNext: document.getElementById("btn-next"),
+    btnPrev: document.getElementById("btn-prev"),
+  };
 
-  //#region FUNCTION
-  //#region QUIZ
+  el.btnNext.addEventListener("click", nextProblem);
+  el.btnPrev.addEventListener("click", previousProblem);
+
   function loadQuiz() {
-    const retrieved = sessionStorage.getItem("current_quiz");
-    if (!retrieved) {
+    const stored = sessionStorage.getItem("current_quiz");
+    if (!stored) {
       window.location.href = "upload.html";
+      return null;
     }
-    return Quiz.fromJSON(JSON.parse(quizData));
+
+    return Quiz.fromJSON(JSON.parse(stored));
   }
-  //#endregion
-  //#region PROBLEMSET
-  function nextProblem() {
-    if (current_problems + 1 != problemSet.length) {
-      current_problems++;
+
+  function displayProblem() {
+    const current = problemSet[currentIndex];
+
+    el.problem.innerHTML = current.display();
+
+    el.currentLabel.innerText = currentIndex + 1;
+
+    el.totalLabel.innerText = problemSet.length;
+
+    updateButtonState();
+  }
+
+  function updateButtonState() {
+    if (isLastProblem()) {
+      el.btnNext.innerText = "Submit";
     } else {
+      el.btnNext.innerText = "Next";
+    }
+  }
+
+  function isLastProblem() {
+    return currentIndex === problemSet.length - 1;
+  }
+
+  function nextProblem() {
+    if (isLastProblem()) {
       submitWork();
-      window.location.href = "result.html";
+      return;
     }
+
+    currentIndex++;
+    displayProblem();
   }
+
   function previousProblem() {
-    if (current_problems - 1 >= 0) {
-      current_problems--;
+    if (currentIndex > 0) {
+      currentIndex--;
+      displayProblem();
     }
   }
-  function showProblem(index) {}
-  //#endregion
-  //#region WORK
+
   function saveAnswer(problemId, answer) {
     work.addAnswer(new Answer(problemId, answer));
   }
@@ -52,9 +86,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function submitWork() {
     sessionStorage.setItem("current_problem_set", JSON.stringify(problemSet));
+
     sessionStorage.setItem("current_work", JSON.stringify(work));
+
     window.location.href = "result.html";
   }
-  //#endregion
-  //#endregion
-});
+
+  displayProblem();
+}
