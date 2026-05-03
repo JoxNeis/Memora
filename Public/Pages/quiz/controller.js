@@ -20,6 +20,12 @@ class QuizPageController {
   }
   //#endregion
 
+  //#region GETTER/SETTER
+  get currentProblem(){
+    return this.problems[this.currentIndex];
+  }
+  //#endregion
+
   //#region INIT
   init() {
     this.btnNext.addEventListener("click", () => this.handleNext());
@@ -50,7 +56,7 @@ class QuizPageController {
 
   //#region RENDER
   renderQuestion() {
-    const problem = this.problems[this.currentIndex];
+    const problem = this.currentProblem;
     this.currentLabel.innerText = this.currentIndex + 1;
     this.totalLabel.innerText = this.problems.length;
     this.btnNext.innerText = this.isLastProblem() ? "Submit" : "Next";
