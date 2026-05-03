@@ -10,26 +10,7 @@ class MultipleAnswer extends Problem {
   }
   //#endregion
 
-  //#region DISPLAY
-  display() {
-    let display = `<form id="q${this.id}">`;
-    display += `<p>${this.text}</p>`;
-    this.option.forEach((opt) => {
-      display += `
-        <label>
-          <input type="checkbox" 
-                 name="q${this.id}" 
-                 value="${opt.id}">
-          ${opt.text}
-        </label><br>
-      `;
-    });
-
-    display += "</form>";
-
-    return display;
-  }
-  //#endregion
+  
 
   //#region JSON
   toJSON() {

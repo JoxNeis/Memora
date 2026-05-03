@@ -50,18 +50,13 @@ class ProblemSet {
 
   //#region FACTORY
   static problemFactory(json) {
-
     switch (json.type) {
-
       case "MultipleChoice":
         return MultipleChoice.fromJSON(json);
-
       case "MultipleAnswer":
         return MultipleAnswer.fromJSON(json);
-
       case "FillInTheBlank":
         return FillInTheBlank.fromJSON(json);
-
       default:
         throw new Error(
           `Unknown problem type: ${json.type}`

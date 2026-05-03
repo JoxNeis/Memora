@@ -1,7 +1,6 @@
 import Problem from './Problem.js';
 
 class FillInTheBlank extends Problem {
-
   //#region CONSTRUCTOR
   constructor(id, text, answer,explanation) {
     super(id, text, answer);
@@ -9,20 +8,17 @@ class FillInTheBlank extends Problem {
   }
   //#endregion
 
-  //#region DISPLAY
-  display() {
-    return `
-      <form id="q${this.id}">
-        <label>
-          ${this.text}
-          <input type="text" 
-                 name="q${this.id}" 
-                 placeholder="Your answer here">
-        </label>
-      </form>
-    `;
+  //#region GETTER / SETTER
+  get explanation(){
+    return this._explanation;
   }
-  //#endregion
+
+  set explanation(value){
+    if (typeof value !== "string" && value === "") {
+      throw new Error("FillInTheBlank explanation can't be empty");
+    }
+    this._explanation = value;
+  }
 
   //#region JSON
   toJSON() {

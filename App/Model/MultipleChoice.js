@@ -5,29 +5,7 @@ class MultipleChoice extends Problem {
   //#region CONSTRUCTOR
   constructor(id, text, option, answer) {
     super(id, text, answer);
-
     this.option = option; 
-  }
-  //#endregion
-
-  //#region DISPLAY
-  display() {
-    let display = `<form id="q${this.id}">`;
-    display += `<p>${this.text}</p>`;
-    this.option.forEach((opt) => {
-      display += `
-        <label>
-          <input type="radio" 
-                 name="q${this.id}" 
-                 value="${opt.id}">
-          ${opt.text}
-        </label><br>
-      `;
-    });
-
-    display += "</form>";
-
-    return display;
   }
   //#endregion
 

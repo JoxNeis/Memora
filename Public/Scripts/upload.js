@@ -1,4 +1,4 @@
-import Quiz from "../../Model/Quiz.js";
+import Quiz from "../../App/Model/Quiz.js";
 
 document.addEventListener("DOMContentLoaded", init);
 

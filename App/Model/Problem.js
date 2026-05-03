@@ -1,25 +1,39 @@
 class Problem {
   //#region CONSTRUCTOR
-  constructor(id, text, key, answer) {
+  constructor(id, text, key) {
     if (this.constructor === Problem) {
       throw new Error("Abstract classes can't be instantiated.");
     }
-
-    if (this.display === Problem.prototype.display) {
-      throw new Error("Subclass must implement display()");
-    }
-
     this.id = id;
     this.text = text;
     this.type = this.constructor.name;
-    this.answer = answer;
+    this.key = key;
   }
   //#endregion
 
-  //#region ABSTRACT
-  display() {
-    throw new Error("Method 'display()' must be implemented.");
+  //#region GETTER / SETTER
+  get id(){
+    return this._id;
   }
+
+  set id(value){
+    if(value<=0){
+      throw new Error("Problem id must be greater than zero");
+    }
+    this._id = value;
+  }
+
+  get text(){
+    return this._text;
+  }
+
+  set text(value){
+    if (typeof value !== "string" || value === "") {
+      throw new Error("Problem text can't be empty");
+    }
+    this._text = value;
+  }
+
   //#endregion
 
   //#region JSON
@@ -28,7 +42,7 @@ class Problem {
       id: this.id,
       text: this.text,
       type: this.type,
-      answer: this.answer,
+      key: this.key,
     };
   }
 
@@ -36,7 +50,7 @@ class Problem {
     this.id = json.id;
     this.text = json.text;
     this.type = json.type;
-    this.answer = json.answer;
+    this.key = json.key;
   }
   //#endregion
 }

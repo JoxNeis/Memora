@@ -1,133 +1,112 @@
 import ProblemSet from './ProblemSet.js';
 
 class Quiz {
-
   //#region CONSTRUCTOR
-  constructor(
-    name,
-    problemSet,
-    duration,
-    config = {}
-  ) {
+  constructor(title, questionBank, timeLimit, settings = {}) {
+    this.title = title;
+    this.questionBank = questionBank;
+    this.timeLimit = timeLimit;
 
-    this.name = name;
-    this.problemSet = problemSet;
-    this.duration = duration;
-    this.quizStart = Date.now();
-    this.quizEnd =
-      this.quizStart +
-      (duration * 1000);
-    this.config = {
-      randomizeProblem:
-        config.randomizeProblem ?? false,
-      problemCount:
-        config.problemCount ??
-        this.problemSet.problems.length
-
+    this.settings = {
+      shuffleQuestions: settings.shuffleQuestions ?? false,
+      questionCount:
+        settings.questionCount ??
+        (this.questionBank?.problems?.length ?? 0),
     };
 
+    this.createQuestionSet();
   }
   //#endregion
 
-
-
-  //#region TIME
-  getRemainingTime() {
-    const now = Date.now();
-    const remaining =
-      this.quizEnd - now;
-    return Math.max(
-      0,
-      Math.floor(remaining / 1000)
-    );
+  //#region GETTER / SETTER
+  get title() {
+    return this._title;
   }
 
-
-  isTimeUp() {
-    return Date.now() >= this.quizEnd;
-  }
-  //#endregion
-
-
-
-  //#region PROBLEM
-  getProblems() {
-
-    let problems =
-      [...this.problemSet.problems];
-
-    if (this.config.randomizeProblem) {
-      problems = this.shuffle(problems);
+  set title(value) {
+    if (typeof value !== "string" || value.trim() === "") {
+      throw new Error("Quiz title can't be empty");
     }
-
-    problems = problems.slice(
-      0,
-      this.config.problemCount
-    );
-
-    return problems;
-
+    this._title = value;
   }
 
+  get questionBank() {
+    return this._questionBank;
+  }
 
-  shuffle(array) {
-
-    let arr = [...array];
-
-    for (
-      let i = arr.length - 1;
-      i > 0;
-      i--
-    ) {
-
-      const j = Math.floor(
-        Math.random() * (i + 1)
-      );
-
-      [arr[i], arr[j]] =
-        [arr[j], arr[i]];
-
+  set questionBank(value) {
+    if (!(value instanceof ProblemSet)) {
+      throw new Error("questionBank must be a ProblemSet");
     }
-
-    return arr;
-
+    this._questionBank = value;
   }
 
+  get timeLimit() {
+    return this._timeLimit;
+  }
+
+  set timeLimit(value) {
+    if (typeof value !== "number" || value <= 0) {
+      throw new Error("Time limit must be a positive number");
+    }
+    this._timeLimit = value;
+  }
+
+  get settings() {
+    return this._settings;
+  }
+
+  set settings(value) {
+    if (typeof value !== "object" || value == null) {
+      throw new Error("Settings must be an object");
+    }
+    this._settings = value;
+  }
+
+  get questionSet() {
+    return this._questionSet;
+  }
   //#endregion
 
+  //#region UTILITIES
+  createQuestionSet() {
+    let questions = [...this.questionBank.problems];
+    if (this.settings.shuffleQuestions) {
+      questions = this.shuffleArray(questions);
+    }
+    questions = questions.slice(0, this.settings.questionCount);
+    this._questionSet = new ProblemSet(questions);
+  }
 
+  shuffleArray(array) {
+    const result = [...array];
+    for (let i = result.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [result[i], result[j]] = [result[j], result[i]];
+    }
+    return result;
+  }
+  //#endregion
 
   //#region JSON
-
   toJSON() {
     return {
-      name: this.name,
-      duration: this.duration,
-      config: this.config,
-      problemSet:
-        this.problemSet.toJSON()
+      title: this.title,
+      questionBank: this.questionBank.toJSON(),
+      timeLimit: this.timeLimit,
+      settings: this.settings,
     };
-
   }
-
 
   static fromJSON(json) {
-
-    const problemSet =
-      ProblemSet.fromJSON(
-        json.problemSet
-      );
-
-    const quiz =
-      new Quiz(
-        json.name,
-        problemSet,
-        json.duration,
-        json.config
-      );
-    return quiz;
-
+    return new Quiz(
+      json.title,
+      ProblemSet.fromJSON(json.questionBank),
+      json.timeLimit,
+      json.settings
+    );
   }
+  //#endregion
 }
 
 export default Quiz;

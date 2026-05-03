@@ -3,48 +3,40 @@ import Answer from './Answer.js';
 class Work {
 
   //#region CONSTRUCTOR
-  constructor(answersSheet = []) {
-    this.answersSheet = answersSheet;
+  constructor(answers = []) {
+    this.answers = answers;
   }
   //#endregion
 
 
   //#region ANSWER MANAGEMENT
-
   addAnswer(answer) {
-    this.answersSheet.push(answer);
+    if(typeof answer !== "answer"){
+      throw new Error("Answer must be instance of answer");
+    }
+    this.answers.push(answer);
   }
 
-  getAnswer(problemId) {
-
-    return this.answersSheet.find(
+  getProblemAnswer(problemId) {
+    return this.answers.find(
       a => a.problemId === problemId
     );
-
-  }
-
-  findAnswer(problemId){
-    return this.answersSheet.find((a) => a.problemId === problemId);
   }
 
   removeAnswer(problemId) {
-
-    this.answersSheet =
-      this.answersSheet.filter(
+    this.answers =
+      this.answers.filter(
         a => a.problemId !== problemId
       );
-
   }
-
   //#endregion
 
 
   //#region JSON
   toJSON() {
-
     return {
-      answersSheet:
-        this.answersSheet.map(
+      answers:
+        this.answers.map(
           a => a.toJSON()
         )
     };
@@ -52,14 +44,11 @@ class Work {
   }
 
   static fromJSON(json) {
-
-    const answersSheet =
-      json.answersSheet.map(a =>
+    const answers =
+      json.answers.map(a =>
         Answer.fromJSON(a)
       );
-
-    return new Work(answersSheet);
-
+    return new Work(answers);
   }
 
   //#endregion
