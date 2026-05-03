@@ -68,11 +68,7 @@ class QuizPageController {
       default:
         throw new Error(`Unknown problem type: ${problem.type}`);
     }
-
-    // After injecting HTML, attach save listeners for this problem
     this.attachSaveListeners(problem);
-
-    // Restore any previously saved answer
     this.restoreAnswer(problem);
   }
 
@@ -119,7 +115,6 @@ class QuizPageController {
     const inputs = this.problemContainer.querySelectorAll("input");
 
     if (problem.type === "FillInTheBlank") {
-      // "input" fires on every keystroke, so the answer is always up to date
       inputs[0].addEventListener("input", () => {
         const response = inputs[0].value;
         if (response !== "") {
@@ -128,7 +123,6 @@ class QuizPageController {
       });
 
     } else if (problem.type === "MultipleChoice") {
-      // "change" fires when a radio button is selected
       inputs.forEach((radio) => {
         radio.addEventListener("change", () => {
           this.service.saveAnswer(new Answer(problem.id, radio.value));
@@ -136,10 +130,8 @@ class QuizPageController {
       });
 
     } else if (problem.type === "MultipleAnswer") {
-      // "change" fires whenever any checkbox is ticked/unticked
       inputs.forEach((checkbox) => {
         checkbox.addEventListener("change", () => {
-          // Collect every currently-checked value into an array
           const selected = Array.from(inputs)
             .filter((cb) => cb.checked)
             .map((cb) => cb.value);
@@ -153,7 +145,6 @@ class QuizPageController {
   }
 
   restoreAnswer(problem) {
-    // Re-load work from session so we always have the latest saved state
     const work = this.service.work;
     const saved = work.getProblemAnswer(problem.id);
     if (!saved) return;
