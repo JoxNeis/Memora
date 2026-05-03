@@ -1,4 +1,4 @@
-class StorageController {
+class StorageService {
   saveFileToSession(fileName, file) {
     sessionStorage.setItem(fileName, JSON.stringify(file));
   }
@@ -6,4 +6,4 @@ class StorageController {
     return sessionStorage.getItem(fileName);
   }
 }
-export default StorageController
+export default StorageService

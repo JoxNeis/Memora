@@ -2,12 +2,12 @@ import Quiz from "../Model/Quiz";
 import Work from "../Model/Work";
 import ProblemSet from "../Model/ProblemSet";
 import Answer from "../Model/Answer";
-import StorageController from "../Controller/StorageController";
+import StorageService from "./StorageService";
 
-class QuizController {
+class QuizService {
   //#region CONSTRUCTOR
   constructor() {
-    this.storage = new StorageController();
+    this.storage = new StorageService();
     this.quizPath = "quiz";
     this.workPath = "work";
   }
@@ -45,4 +45,4 @@ class QuizController {
   }
   //#endregion
 }
-export default QuizController;
+export default QuizService;
