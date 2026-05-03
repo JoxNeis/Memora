@@ -16,7 +16,7 @@ class QuizService {
   //#region GETTER / SETTER
   get quiz() {
     const data = this.storage.loadFileFromSession(this.quizPath);
-    return new Quiz().fromJSON(data);
+    return Quiz.fromJSON(JSON.parse(data));
   }
 
   set quiz(value) {
@@ -29,7 +29,7 @@ class QuizService {
 
   get work() {
     const data = this.storage.loadFileFromSession(this.workPath);
-    return new Work().fromJSON(data);
+    return Work.fromJSON(JSON.parse(data));
   }
 
   set work(value) {
