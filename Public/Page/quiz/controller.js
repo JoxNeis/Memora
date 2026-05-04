@@ -1,15 +1,19 @@
-import Quiz from "../../../App/Model/Quiz";
-import QuizService from "../../../App/Service/QuizService";
-import Answer from "../../../App/Model/Answer";
+import Quiz from "../../../App/Model/Quiz.js";
+import QuizService from "../../../App/Service/QuizService.js";
+import Answer from "../../../App/Model/Answer.js";
 
 class QuizPageController {
   //#region CONSTRUCTOR
-  constructor() {
-    this.service = new QuizService();
+  /**
+   * 
+   * @param {QuizService} service 
+   */
+  constructor(service) {
+    this.service = service;
     this.quiz = this.service.quiz;
     this.problems = this.quiz.questionSet.problems;
     this.currentIndex = 0;
-
+    /*
     this.problemContainer = document.getElementById("problem");
     this.currentLabel = document.getElementById("current-problem");
     this.totalLabel = document.getElementById("total-problem");
@@ -17,6 +21,7 @@ class QuizPageController {
     this.btnPrev = document.getElementById("btn-prev");
 
     this.init();
+    */
   }
   //#endregion
 

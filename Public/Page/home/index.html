@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Memora - Home</title>
+    <link rel="stylesheet" src="../../Assets/Styles/root.css">
+</head>
+
+<body>
+    <header>
+        <h1>Memora</h1>
+    </header>
+    <aside>
+
+    </aside>
+    <main>
+        <h2>Upload your file here!</h2>
+        <div id="upload-area">
+            <p>Drag and drop or click here.</p>
+            <form>
+                <input id="input-file" name="quiz-file" type="file"></input>
+            </form>
+        </div>
+
+        <button id="save-button">Start Quiz!</button>
+    </main>
+    <footer>
+        Created by JoxNeis @2026
+    </footer>
+</body>
+<script type="module" src="controller.js"></script>
+<script type="module">
+    import QuizService from "../../../App/Service/QuizService.js";
+    import HomePageController from "./controller.js";
+
+    document.addEventListener("DOMContentLoaded", () => {
+        const service = new QuizService();
+        const controller = new HomePageController(service);
+    });
+</script>
+
+</html>

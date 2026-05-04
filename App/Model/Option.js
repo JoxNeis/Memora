@@ -14,9 +14,6 @@ class Option {
   }
 
   set id(value) {
-    if (value <= 0) {
-      throw new Error("Option id must be greater than zero");
-    }
     this._id = value;
   }
 

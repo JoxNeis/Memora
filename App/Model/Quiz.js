@@ -92,7 +92,7 @@ class Quiz {
   toJSON() {
     return {
       title: this.title,
-      questionBank: this.questionBank.toJSON(),
+      questionBank: this.questionBank.toJSON().problems,
       timeLimit: this.timeLimit,
       settings: this.settings,
     };
@@ -102,7 +102,7 @@ class Quiz {
     return new Quiz(
       json.title,
       ProblemSet.fromJSON(json.questionBank),
-      json.timeLimit,
+      json.duration,
       json.settings
     );
   }

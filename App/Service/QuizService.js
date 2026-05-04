@@ -1,13 +1,12 @@
-import Quiz from "../Model/Quiz";
-import Work from "../Model/Work";
-import ProblemSet from "../Model/ProblemSet";
-import Answer from "../Model/Answer";
-import StorageService from "./StorageService";
+import Quiz from "../Model/Quiz.js";
+import Work from "../Model/Work.js";
+import ProblemSet from "../Model/ProblemSet.js";
+import Answer from "../Model/Answer.js";
+import StorageService from "./StorageService.js";
 
 class QuizService {
   //#region CONSTRUCTOR
   constructor() {
-    this.storage = new StorageService();
     this.quizPath = "quiz";
     this.workPath = "work";
   }
@@ -15,12 +14,12 @@ class QuizService {
 
   //#region GETTER / SETTER
   get quiz() {
-    const data = this.storage.loadFileFromSession(this.quizPath);
+    const data = StorageService.loadFileFromSession(this.quizPath);
     return Quiz.fromJSON(JSON.parse(data));
   }
 
   set quiz(value) {
-    this.storage.saveFileToSession(this.quizPath, value);
+    StorageService.saveFileToSession(this.quizPath, value);
   }
 
   get questionSet() {
@@ -28,12 +27,12 @@ class QuizService {
   }
 
   get work() {
-    const data = this.storage.loadFileFromSession(this.workPath);
+    const data = StorageService.loadFileFromSession(this.workPath);
     return Work.fromJSON(JSON.parse(data));
   }
 
   set work(value) {
-    this.storage.saveFileToSession(this.workPath, value);
+    StorageService.saveFileToSession(this.workPath, value);
   }
   //#endregion
 
