@@ -1,16 +1,16 @@
 /* ============================================================
    MEMORA — mobile.css
-   Layout and styles for screens < 768px
-   Mobile-first overrides
+   Layout for screens < 768px
    ============================================================ */
 
 @media (max-width: 767px) {
 
   /* ── ROOT OVERRIDES ─────────────────────────────────────── */
   :root {
-    --text-3xl: 2.25rem;  /* scale down display text */
-    --text-2xl: 1.75rem;
-    --text-xl:  1.375rem;
+    --text-3xl: 2.5rem;
+    --text-2xl: 1.875rem;
+    --text-xl:  1.5rem;
+    --content-width: 100%;
   }
 
   /* ── PAGE SHELL ─────────────────────────────────────────── */
@@ -26,54 +26,67 @@
   }
 
   header h1 {
-    font-size: var(--text-xl);
+    font-size: var(--text-md);
   }
 
   /* ── FOOTER ─────────────────────────────────────────────── */
   footer {
     padding: var(--space-4) var(--space-5);
-    text-align: center;
   }
 
   /* ── MAIN ───────────────────────────────────────────────── */
   main {
     flex: 1;
     padding: var(--space-6) var(--space-5);
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  main.center {
+    align-items: stretch;
   }
 
   /* ── HOME PAGE ──────────────────────────────────────────── */
   main > h2 {
     font-size: var(--text-xl);
     margin-bottom: var(--space-6);
-    text-align: center;
     animation: fadeUp var(--dur-slow) var(--ease-out) both;
   }
 
   #upload-area {
-    border: 2px dashed var(--color-border);
+    width: 100%;
+    border: 1px dashed var(--color-border);
     border-radius: var(--radius-lg);
-    padding: var(--space-10) var(--space-6);
+    padding: var(--space-10) var(--space-5);
     text-align: center;
     background: var(--color-surface);
-    margin-bottom: var(--space-6);
+    margin-bottom: var(--space-4);
     cursor: pointer;
-    transition: border-color var(--dur-base) var(--ease-out),
-                background var(--dur-base) var(--ease-out);
-    animation: fadeUp var(--dur-slow) var(--ease-out) 80ms both;
-    /* tap highlight */
     -webkit-tap-highlight-color: transparent;
+    animation: fadeUp var(--dur-slow) var(--ease-out) 80ms both;
+    transition: border-color var(--dur-base), background var(--dur-base);
   }
 
   #upload-area:active {
-    border-color: var(--color-accent);
-    background: rgba(212, 71, 42, 0.04);
+    border-color: var(--color-ink);
+    background: var(--color-surface-alt);
   }
 
   #upload-area p {
-    font-size: var(--text-base);
+    font-size: var(--text-sm);
     color: var(--color-ink-muted);
-    margin-bottom: var(--space-3);
-    font-style: italic;
+    font-family: var(--font-mono);
+    margin-bottom: 0;
+  }
+
+  #upload-area #uploaded {
+    display: block;
+    margin-top: var(--space-3);
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    color: var(--color-ink);
+    font-weight: 500;
   }
 
   #upload-area input[type="file"] {
@@ -83,103 +96,66 @@
   #save-button {
     width: 100%;
     padding: var(--space-4);
-    font-size: var(--text-base);
     animation: fadeUp var(--dur-slow) var(--ease-out) 160ms both;
   }
 
   /* ── QUIZ PAGE ──────────────────────────────────────────── */
-
-  /* On mobile: sidebar collapses to a horizontal strip at the top */
   aside {
-    border-right: none;
-    border-bottom: 1.5px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border);
     padding: var(--space-3) var(--space-5);
-    background: var(--color-surface);
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
+    background: var(--color-bg);
   }
 
   #question-grid {
     flex-wrap: nowrap;
     gap: var(--space-2);
-    padding-bottom: var(--space-1); /* avoid clipping shadow */
+    padding-bottom: var(--space-1);
   }
 
   #question-grid > div {
     flex-shrink: 0;
-    width: 1.9rem;
-    height: 1.9rem;
-    font-size: var(--text-xs);
+    width: 1.75rem;
+    height: 1.75rem;
+    font-size: 0.625rem;
   }
 
-  /* Quiz card — no shadow, fill the viewport edge-to-edge */
   main > div {
-    background: var(--color-surface);
-    border: 1.5px solid var(--color-border);
-    border-radius: var(--radius-lg);
-    padding: var(--space-6);
+    width: 100%;
     display: flex;
     flex-direction: column;
     gap: var(--space-4);
     animation: fadeUp var(--dur-slow) var(--ease-out) both;
   }
 
-  /* Progress counter */
   main > div > p:first-child {
     font-family: var(--font-mono);
     font-size: var(--text-xs);
-    color: var(--color-ink-muted);
-    letter-spacing: 0.04em;
+    color: var(--color-ink-faint);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
   }
 
-  /* Problem area */
-  #problem {
+  .buttons {
+    display: flex;
+    gap: var(--space-2);
+    flex-wrap: wrap;
+    margin-top: var(--space-2);
+  }
+
+  .buttons button {
     flex: 1;
-  }
-
-  /* Navigation buttons: full-width stacked on small, inline on wider mobile */
-  main > div > button {
-    width: 100%;
-    padding: var(--space-4);
-    font-size: var(--text-base);
+    min-width: 80px;
+    padding: var(--space-3) var(--space-4);
     -webkit-tap-highlight-color: transparent;
   }
 
-  /* side by side if 2 buttons fit */
-  @media (min-width: 480px) {
-    main > div {
-      display: block;
-    }
-
-    main > div > button#btn-prev,
-    main > div > button#btn-next {
-      display: inline-flex;
-      width: calc(50% - var(--space-2));
-      margin-top: var(--space-5);
-    }
-
-    main > div > button#btn-next {
-      margin-left: var(--space-2);
-    }
-
-    main > div > button#btn-clear {
-      display: block;
-      width: 100%;
-      margin-top: var(--space-3);
-    }
-  }
-
-  /* ── OPTIONS (touch-friendly) ───────────────────────────── */
+  /* ── OPTIONS ────────────────────────────────────────────── */
   .option {
-    padding: var(--space-4);
-    gap: var(--space-3);
+    padding: var(--space-3) var(--space-4);
+    min-height: 2.75rem;
     -webkit-tap-highlight-color: transparent;
-    /* larger tap target */
-    min-height: 3rem;
-  }
-
-  .options {
-    gap: var(--space-3);
   }
 
   .problem-text {
@@ -188,13 +164,13 @@
 
   input[type="radio"],
   input[type="checkbox"] {
-    width: 1.25em;
-    height: 1.25em;
+    width: 1.1em;
+    height: 1.1em;
   }
 
   /* ── RESULT PAGE ────────────────────────────────────────── */
   #score {
-    text-align: center;
+    width: 100%;
     padding: var(--space-6) 0;
     animation: fadeUp var(--dur-slow) var(--ease-out) both;
   }
@@ -204,20 +180,30 @@
   }
 
   #explanation {
+    width: 100%;
     animation: fadeUp var(--dur-slow) var(--ease-out) 120ms both;
   }
 
   .explanation {
-    padding: var(--space-5);
+    padding: var(--space-5) 0;
   }
 
   .user-answer {
     font-size: var(--text-xs);
   }
 
-  /* ── TEXT INPUT (fill-in-blank) ─────────────────────────── */
   input[type="text"] {
-    font-size: var(--text-base); /* prevent iOS zoom on focus */
+    font-size: var(--text-base);
     padding: var(--space-4);
+  }
+
+  .quiz-links {
+    flex-wrap: wrap;
+  }
+
+  .quiz-links a {
+    flex: 1;
+    text-align: center;
+    min-width: 100px;
   }
 }

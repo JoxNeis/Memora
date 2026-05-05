@@ -4,24 +4,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Memora - Home</title>
+    <title>Memora — Home</title>
     <link rel="stylesheet" href="../../Assets/Styles/main.css">
+    <style>
+        .home-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            gap: 0;
+        }
+
+        .home-heading {
+            font-family: var(--font-display);
+            font-style: italic;
+            font-weight: 400;
+            font-size: var(--text-xl);
+            color: var(--color-ink-muted);
+            margin-bottom: var(--space-10);
+            text-align: center;
+            animation: fadeUp var(--dur-slow) var(--ease-out) both;
+        }
+    </style>
 </head>
+
 <body>
     <header>
         <h1>Memora</h1>
     </header>
     <main class="center">
-        <h2>Upload your file here!</h2>
-        <div id="upload-area">
-            <p>Drag and drop or click here.</p>
-            <span id="uploaded"></span>
-            <input id="input-file" name="quiz-file" type="file">
+        <div class="home-wrapper">
+            <p class="home-heading">Upload your quiz file to begin.</p>
+            <div id="upload-area">
+                <p>Drag & drop or click to browse</p>
+                <span id="uploaded"></span>
+                <input id="input-file" name="quiz-file" type="file" accept=".json">
+            </div>
+            <button id="save-button">Start Quiz</button>
         </div>
-        <button id="save-button">Start Quiz!</button>
     </main>
     <footer>
-        Created by JoxNeis @2026
+        Created by JoxNeis &nbsp;&mdash;&nbsp; 2026
     </footer>
 </body>
 

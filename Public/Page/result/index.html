@@ -4,29 +4,66 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Memora - Result</title>
+    <title>Memora — Result</title>
     <link rel="stylesheet" href="../../Assets/Styles/main.css">
-</head>
-<script>
-    window.MathJax = {
-        tex: {
-            inlineMath: [['$', '$'], ['\\(', '\\)']],
-            displayMath: [['$$', '$$'], ['\\[', '\\]']]
-        },
-        options: {
-            skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+    <style>
+        .result-wrapper {
+            width: var(--content-width);
+            max-width: 100%;
         }
-    };
-</script>
-<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+        #score {
+            text-align: left;
+        }
+
+        .score-label {
+            font-family: var(--font-mono);
+            font-size: var(--text-xs);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--color-ink-faint);
+            margin-bottom: var(--space-2);
+        }
+
+        .score-display {
+            display: flex;
+            align-items: baseline;
+            gap: var(--space-2);
+            margin-bottom: var(--space-2);
+        }
+
+        .score-of {
+            font-family: var(--font-mono);
+            font-size: var(--text-base);
+            color: var(--color-ink-muted);
+        }
+    </style>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+            }
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+
 <body>
     <header>
         <h1>Memora</h1>
     </header>
     <main class="center">
-        <div>
+        <div class="result-wrapper">
             <div id="score">
-                <span id="achieved-score"></span> of <span>100</span>
+                <p class="score-label">Your Score</p>
+                <div class="score-display">
+                    <span id="achieved-score"></span>
+                    <span class="score-of">/ 100</span>
+                </div>
             </div>
             <div id="explanation"></div>
             <div class="quiz-links">
@@ -36,7 +73,7 @@
         </div>
     </main>
     <footer>
-        Created by JoxNeis @2026
+        Created by JoxNeis &nbsp;&mdash;&nbsp; 2026
     </footer>
 </body>
 
@@ -44,11 +81,6 @@
     import QuizService from "../../../App/Service/QuizService.js";
     import ResultPageController from "./controller.js";
     document.addEventListener("DOMContentLoaded", () => {
-        window.MathJax = {
-            tex: {
-                inlineMath: [['$', '$'], ['\\(', '\\)']]
-            }
-        };
         const controller = new ResultPageController(new QuizService());
     });
 </script>

@@ -4,57 +4,64 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Memora - Quiz</title>
+    <title>Memora — Quiz</title>
     <link rel="stylesheet" href="../../Assets/Styles/main.css">
-</head>
-<style>
-    .answered {
-        background-color: grey;
-    }
+    <style>
+        .answered   { background: var(--color-answered) !important; border-color: var(--color-answered) !important; color: var(--color-ink-inv) !important; }
+        .not-answered { background: transparent; color: var(--color-ink-muted); }
 
-    .not-answered {
-        background-color: transparent;
-    }
-</style>
-<script>
-    window.MathJax = {
-        tex: {
-            inlineMath: [['$', '$'], ['\\(', '\\)']],
-            displayMath: [['$$', '$$'], ['\\[', '\\]']]
-        },
-        options: {
-            skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+        .quiz-counter {
+            font-family: var(--font-mono);
+            font-size: var(--text-xs);
+            color: var(--color-ink-faint);
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            margin-bottom: var(--space-6);
         }
-    };
-</script>
-<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+        .quiz-counter strong {
+            color: var(--color-ink);
+        }
+    </style>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+            }
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
 
 <body>
     <header>
         <h1>Memora</h1>
     </header>
     <aside>
-        <div id="question-grid">
-
-        </div>
+        <div id="question-grid"></div>
     </aside>
-    <main class="center">
+    <main>
         <div>
-            <p><span id="current-problem"></span>/<span id="total-problem"></span></p>
-            <p id="problem"></p>
+            <p class="quiz-counter">
+                Question <strong><span id="current-problem"></span></strong> of <span id="total-problem"></span>
+            </p>
+            <div id="problem"></div>
             <div class="buttons quiz-links">
-                <button id="btn-prev">Prev</button>
+                <button id="btn-prev">← Prev</button>
                 <button id="btn-clear">Clear</button>
-                <button id="btn-next">Next</button>
+                <button id="btn-next">Next →</button>
             </div>
         </div>
-
     </main>
     <footer>
-        Created by JoxNeis @2026
+        Created by JoxNeis &nbsp;&mdash;&nbsp; 2026
     </footer>
 </body>
-<script type="module" src="controller.js"></script>
+
 <script type="module">
     import QuizService from "../../../App/Service/QuizService.js";
     import QuizPageController from "./controller.js";

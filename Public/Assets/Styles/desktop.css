@@ -1,6 +1,6 @@
 /* ============================================================
    MEMORA — desktop.css
-   Layout and styles for screens ≥ 768px
+   Layout for screens ≥ 768px — CONSTANT WIDTHS
    ============================================================ */
 
 @media (min-width: 768px) {
@@ -15,51 +15,62 @@
 
   /* ── HEADER ─────────────────────────────────────────────── */
   header {
-    padding: var(--space-5) var(--space-12);
-  }
-
-  header h1 {
-    font-size: var(--text-2xl);
+    padding: var(--space-5) var(--space-8);
+    max-width: 100%;
   }
 
   /* ── FOOTER ─────────────────────────────────────────────── */
   footer {
-    padding: var(--space-5) var(--space-12);
+    padding: var(--space-4) var(--space-8);
   }
 
   /* ── MAIN ───────────────────────────────────────────────── */
   main {
     padding-block: var(--space-16);
-    padding-inline: var(--space-12);
+    padding-inline: var(--space-8);
   }
 
   /* ── HOME PAGE ──────────────────────────────────────────── */
+  main.center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
   #upload-area {
-    max-width: 480px;
-    margin-inline: auto;
-    margin-bottom: var(--space-8);
-    border: 2px dashed var(--color-border);
+    width: var(--content-width);
+    max-width: var(--content-width);
+    border: 1px dashed var(--color-border);
     border-radius: var(--radius-lg);
-    padding: var(--space-12) var(--space-8);
+    padding: var(--space-16) var(--space-8);
     text-align: center;
     background: var(--color-surface);
     cursor: pointer;
-    transition: border-color var(--dur-base) var(--ease-out),
-                background var(--dur-base) var(--ease-out);
-    animation: fadeUp var(--dur-slow) var(--ease-out) both;
-    animation-delay: 80ms;
+    transition: border-color var(--dur-base), background var(--dur-base);
+    animation: fadeUp var(--dur-slow) var(--ease-out) 80ms both;
+    margin-bottom: var(--space-4);
   }
 
   #upload-area:hover {
-    border-color: var(--color-accent);
-    background: rgba(212, 71, 42, 0.04);
+    border-color: var(--color-ink);
+    background: var(--color-surface-alt);
   }
 
   #upload-area p {
-    font-size: var(--text-md);
+    font-size: var(--text-sm);
     color: var(--color-ink-muted);
-    margin-bottom: var(--space-4);
-    font-style: italic;
+    font-family: var(--font-mono);
+    margin-bottom: 0;
+  }
+
+  #upload-area #uploaded {
+    display: block;
+    margin-top: var(--space-3);
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    color: var(--color-ink);
+    font-weight: 500;
   }
 
   #upload-area input[type="file"] {
@@ -67,27 +78,25 @@
   }
 
   #save-button {
-    display: block;
-    margin-inline: auto;
-    padding: var(--space-4) var(--space-10);
-    font-size: var(--text-base);
-    animation: fadeUp var(--dur-slow) var(--ease-out) both;
-    animation-delay: 180ms;
+    width: var(--content-width);
+    padding: var(--space-4);
+    font-size: var(--text-sm);
+    animation: fadeUp var(--dur-slow) var(--ease-out) 180ms both;
   }
 
-  /* Home heading */
   main > h2 {
-    text-align: center;
-    font-size: var(--text-2xl);
+    font-family: var(--font-display);
+    font-size: var(--text-xl);
+    font-weight: 400;
+    font-style: italic;
     margin-bottom: var(--space-8);
     animation: fadeUp var(--dur-slow) var(--ease-out) both;
+    text-align: center;
   }
 
   /* ── QUIZ PAGE ──────────────────────────────────────────── */
-
-  /* Quiz layout: sidebar + main panel */
   body:has(#question-grid) {
-    grid-template-columns: 220px 1fr;
+    grid-template-columns: var(--sidebar-width) 1fr;
     grid-template-rows: auto 1fr auto;
     grid-template-areas:
       "header header"
@@ -101,124 +110,95 @@
   body:has(#question-grid) footer { grid-area: footer; }
 
   aside {
-    border-right: 1.5px solid var(--color-border);
-    padding: var(--space-8) var(--space-6);
-    background: var(--color-surface);
+    border-right: 1px solid var(--color-border);
+    padding: var(--space-8) var(--space-5);
+    background: var(--color-bg);
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
   }
 
-  aside h3 {
-    font-size: var(--text-sm);
+  aside::before {
+    content: "Questions";
+    display: block;
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
     text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: var(--color-ink-muted);
+    letter-spacing: 0.1em;
+    color: var(--color-ink-faint);
     margin-bottom: var(--space-4);
   }
 
-  #question-grid {
-    gap: var(--space-2);
+  /* Quiz content */
+  main {
+    padding: var(--space-12) var(--space-12);
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
   }
 
-  /* Quiz content card */
   main > div {
+    width: var(--content-width);
     max-width: var(--content-width);
-    background: var(--color-surface);
-    border: 1.5px solid var(--color-border);
-    border-radius: var(--radius-lg);
-    padding: var(--space-10);
-    box-shadow: var(--shadow-md);
     animation: fadeUp var(--dur-slow) var(--ease-out) both;
-  }
-
-  /* Progress label */
-  main > div > p:first-child {
-    font-family: var(--font-mono);
-    font-size: var(--text-sm);
-    color: var(--color-ink-muted);
-    margin-bottom: var(--space-6);
-    letter-spacing: 0.04em;
-  }
-
-  /* Button row */
-  .btn-row,
-  main > div > :is(button, [id^="btn"]) {
-    margin-top: var(--space-8);
-  }
-
-  /* Arrange prev/next/clear buttons inline */
-  main > div {
     display: flex;
     flex-direction: column;
+    gap: var(--space-4);
   }
 
-  main > div > p#problem {
-    flex: 1;
+  main > div > p:first-child {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--color-ink-faint);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
   }
 
-  /* All buttons after the problem container */
-  main > div > button {
-    align-self: flex-start;
-    margin-top: var(--space-3);
+  #problem {
+    min-height: 200px;
   }
 
-  main > div > button + button {
-    margin-left: var(--space-2);
-    align-self: flex-start;
-  }
-
-  /* Buttons side by side on desktop */
-  main > div > button#btn-prev,
-  main > div > button#btn-next,
-  main > div > button#btn-clear {
-    display: inline-flex;
-    margin-top: var(--space-8);
+  .buttons {
+    display: flex;
+    gap: var(--space-2);
+    align-items: center;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    margin-top: var(--space-4);
   }
 
   /* ── RESULT PAGE ────────────────────────────────────────── */
+  body:not(:has(#question-grid)) main.center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
   #score {
+    width: var(--content-width);
     animation: fadeUp var(--dur-slow) var(--ease-out) both;
   }
 
   #explanation {
-    max-width: var(--content-width);
-    margin-inline: auto;
+    width: var(--content-width);
     animation: fadeUp var(--dur-slow) var(--ease-out) 120ms both;
   }
 
-  .explanation {
-    transition: box-shadow var(--dur-base) var(--ease-out);
-  }
-
-  .explanation:hover {
-    box-shadow: var(--shadow-md);
-  }
-
-  /* ── OPTION HOVER (desktop only) ────────────────────────── */
+  /* ── OPTION HOVER ─────────────────────────────────────── */
   .option:hover {
     border-color: var(--color-ink-muted);
     background: var(--color-surface-alt);
   }
-
-  /* ── FULL-WIDTH BUTTON ROW ALIGNMENT ────────────────────── */
-  .button-group {
-    display: flex;
-    gap: var(--space-3);
-    align-items: center;
-    flex-wrap: wrap;
-  }
 }
 
-/* Large screens: breathe more */
-@media (min-width: 1100px) {
-  main {
-    padding-inline: var(--space-20);
+/* ── LARGE SCREENS ─────────────────────────────────────────── */
+@media (min-width: 1200px) {
+  header {
+    padding-inline: var(--space-12);
   }
 
-  header,
   footer {
-    padding-inline: var(--space-20);
-  }
-
-  main > div {
-    padding: var(--space-12);
+    padding-inline: var(--space-12);
   }
 }
