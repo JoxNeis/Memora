@@ -85,20 +85,30 @@ class QuizPageController {
   renderQuestionNumberGrid() {
     if (!this.questionNumberGrid) return;
     this.questionNumberGrid.innerHTML = "";
+
     this.problems.forEach((problem, i) => {
-      this.questionNumberGrid.innerHTML += `<div id="${problem.id}" class="not-answered">${i + 1}</div>`;
+      const div = document.createElement("div");
+      div.id = `qg${problem.id}`;
+      div.className = "not-answered";
+      div.textContent = i + 1;
+      div.addEventListener("click", () => {
+        this.currentIndex = i;
+        this.renderQuestion();
+      });
+
+      this.questionNumberGrid.appendChild(div);
     });
   }
 
   renderQuestionNumberGridAnswered(problem) {
-    const el = document.getElementById(problem.id);
+    const el = document.getElementById(`qg${problem.id}`);
     if (!el) return;
     el.classList.add("answered");
     el.classList.remove("not-answered");
   }
 
   renderQuestionNumberGridNone(problem) {
-    const el = document.getElementById(problem.id);
+    const el = document.getElementById(`qg${problem.id}`);
     if (!el) return;
     el.classList.add("not-answered");
     el.classList.remove("answered");
@@ -115,12 +125,10 @@ class QuizPageController {
 
     const html = problem.render();
     if (this.problemContainer) this.problemContainer.innerHTML = html;
-    MathJax.typesetPromise([problem]).catch((err) => console.log(err.message));
-    requestAnimationFrame(() => {
-      MathJax.typesetPromise([this.problemContainer]).catch((err) =>
-        console.log(err.message),
-      );
-    });
+    MathJax.typesetPromise([this.problemContainer]).catch((err) =>
+      console.log(err.message),
+    );
+
     this.attachSaveListeners(problem);
     this.restoreAnswer(problem);
   }

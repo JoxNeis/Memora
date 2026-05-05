@@ -43,11 +43,6 @@ class ResultPageController {
     MathJax.typesetPromise([this.explanation]).catch((err) =>
       console.log(err.message),
     );
-    requestAnimationFrame(() => {
-      MathJax.typesetPromise([this.explanation]).catch((err) =>
-        console.log(err.message),
-      );
-    });
   }
 }
 

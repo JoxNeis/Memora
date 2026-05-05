@@ -16,6 +16,17 @@
         background-color: transparent;
     }
 </style>
+<script>
+    window.MathJax = {
+        tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']],
+            displayMath: [['$$', '$$'], ['\\[', '\\]']]
+        },
+        options: {
+            skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+        }
+    };
+</script>
 <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
 <body>
@@ -49,7 +60,6 @@
     import QuizPageController from "./controller.js";
     document.addEventListener("DOMContentLoaded", () => {
         const controller = new QuizPageController(new QuizService());
-        MathJax.typesetPromise();
     });
 </script>
 

@@ -7,8 +7,18 @@
     <title>Memora - Result</title>
     <link rel="stylesheet" href="../../Assets/Styles/main.css">
 </head>
+<script>
+    window.MathJax = {
+        tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']],
+            displayMath: [['$$', '$$'], ['\\[', '\\]']]
+        },
+        options: {
+            skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+        }
+    };
+</script>
 <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-
 <body>
     <header>
         <h1>Memora</h1>
@@ -34,8 +44,12 @@
     import QuizService from "../../../App/Service/QuizService.js";
     import ResultPageController from "./controller.js";
     document.addEventListener("DOMContentLoaded", () => {
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']]
+            }
+        };
         const controller = new ResultPageController(new QuizService());
-        MathJax.typesetPromise();
     });
 </script>
 
