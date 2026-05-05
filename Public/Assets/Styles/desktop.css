@@ -1,0 +1,224 @@
+/* ============================================================
+   MEMORA — desktop.css
+   Layout and styles for screens ≥ 768px
+   ============================================================ */
+
+@media (min-width: 768px) {
+
+  /* ── PAGE SHELL ─────────────────────────────────────────── */
+  body {
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    grid-template-columns: 1fr;
+    min-height: 100vh;
+  }
+
+  /* ── HEADER ─────────────────────────────────────────────── */
+  header {
+    padding: var(--space-5) var(--space-12);
+  }
+
+  header h1 {
+    font-size: var(--text-2xl);
+  }
+
+  /* ── FOOTER ─────────────────────────────────────────────── */
+  footer {
+    padding: var(--space-5) var(--space-12);
+  }
+
+  /* ── MAIN ───────────────────────────────────────────────── */
+  main {
+    padding-block: var(--space-16);
+    padding-inline: var(--space-12);
+  }
+
+  /* ── HOME PAGE ──────────────────────────────────────────── */
+  #upload-area {
+    max-width: 480px;
+    margin-inline: auto;
+    margin-bottom: var(--space-8);
+    border: 2px dashed var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-12) var(--space-8);
+    text-align: center;
+    background: var(--color-surface);
+    cursor: pointer;
+    transition: border-color var(--dur-base) var(--ease-out),
+                background var(--dur-base) var(--ease-out);
+    animation: fadeUp var(--dur-slow) var(--ease-out) both;
+    animation-delay: 80ms;
+  }
+
+  #upload-area:hover {
+    border-color: var(--color-accent);
+    background: rgba(212, 71, 42, 0.04);
+  }
+
+  #upload-area p {
+    font-size: var(--text-md);
+    color: var(--color-ink-muted);
+    margin-bottom: var(--space-4);
+    font-style: italic;
+  }
+
+  #upload-area input[type="file"] {
+    display: none;
+  }
+
+  #save-button {
+    display: block;
+    margin-inline: auto;
+    padding: var(--space-4) var(--space-10);
+    font-size: var(--text-base);
+    animation: fadeUp var(--dur-slow) var(--ease-out) both;
+    animation-delay: 180ms;
+  }
+
+  /* Home heading */
+  main > h2 {
+    text-align: center;
+    font-size: var(--text-2xl);
+    margin-bottom: var(--space-8);
+    animation: fadeUp var(--dur-slow) var(--ease-out) both;
+  }
+
+  /* ── QUIZ PAGE ──────────────────────────────────────────── */
+
+  /* Quiz layout: sidebar + main panel */
+  body:has(#question-grid) {
+    grid-template-columns: 220px 1fr;
+    grid-template-rows: auto 1fr auto;
+    grid-template-areas:
+      "header header"
+      "aside  main"
+      "footer footer";
+  }
+
+  body:has(#question-grid) header { grid-area: header; }
+  body:has(#question-grid) aside  { grid-area: aside; }
+  body:has(#question-grid) main   { grid-area: main; }
+  body:has(#question-grid) footer { grid-area: footer; }
+
+  aside {
+    border-right: 1.5px solid var(--color-border);
+    padding: var(--space-8) var(--space-6);
+    background: var(--color-surface);
+  }
+
+  aside h3 {
+    font-size: var(--text-sm);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-ink-muted);
+    margin-bottom: var(--space-4);
+  }
+
+  #question-grid {
+    gap: var(--space-2);
+  }
+
+  /* Quiz content card */
+  main > div {
+    max-width: var(--content-width);
+    background: var(--color-surface);
+    border: 1.5px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-10);
+    box-shadow: var(--shadow-md);
+    animation: fadeUp var(--dur-slow) var(--ease-out) both;
+  }
+
+  /* Progress label */
+  main > div > p:first-child {
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    color: var(--color-ink-muted);
+    margin-bottom: var(--space-6);
+    letter-spacing: 0.04em;
+  }
+
+  /* Button row */
+  .btn-row,
+  main > div > :is(button, [id^="btn"]) {
+    margin-top: var(--space-8);
+  }
+
+  /* Arrange prev/next/clear buttons inline */
+  main > div {
+    display: flex;
+    flex-direction: column;
+  }
+
+  main > div > p#problem {
+    flex: 1;
+  }
+
+  /* All buttons after the problem container */
+  main > div > button {
+    align-self: flex-start;
+    margin-top: var(--space-3);
+  }
+
+  main > div > button + button {
+    margin-left: var(--space-2);
+    align-self: flex-start;
+  }
+
+  /* Buttons side by side on desktop */
+  main > div > button#btn-prev,
+  main > div > button#btn-next,
+  main > div > button#btn-clear {
+    display: inline-flex;
+    margin-top: var(--space-8);
+  }
+
+  /* ── RESULT PAGE ────────────────────────────────────────── */
+  #score {
+    animation: fadeUp var(--dur-slow) var(--ease-out) both;
+  }
+
+  #explanation {
+    max-width: var(--content-width);
+    margin-inline: auto;
+    animation: fadeUp var(--dur-slow) var(--ease-out) 120ms both;
+  }
+
+  .explanation {
+    transition: box-shadow var(--dur-base) var(--ease-out);
+  }
+
+  .explanation:hover {
+    box-shadow: var(--shadow-md);
+  }
+
+  /* ── OPTION HOVER (desktop only) ────────────────────────── */
+  .option:hover {
+    border-color: var(--color-ink-muted);
+    background: var(--color-surface-alt);
+  }
+
+  /* ── FULL-WIDTH BUTTON ROW ALIGNMENT ────────────────────── */
+  .button-group {
+    display: flex;
+    gap: var(--space-3);
+    align-items: center;
+    flex-wrap: wrap;
+  }
+}
+
+/* Large screens: breathe more */
+@media (min-width: 1100px) {
+  main {
+    padding-inline: var(--space-20);
+  }
+
+  header,
+  footer {
+    padding-inline: var(--space-20);
+  }
+
+  main > div {
+    padding: var(--space-12);
+  }
+}

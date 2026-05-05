@@ -12,7 +12,7 @@ class FillInTheBlank extends Problem {
   renderQuestion() {
     return `
       <p class="problem-text">${this.text}</p>
-      <input type="text" name="${this.id}" placeholder="Your answer…">
+      <input type="text" name="${this.id}" placeholder="">
     `;
   }
 
