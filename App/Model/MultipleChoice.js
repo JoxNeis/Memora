@@ -27,12 +27,13 @@ class MultipleChoice extends Problem {
       <div class="options">${options}</div>
     `;
   }
-  renderExplanation(){
+
+  renderExplanation() {
     const options = (this.option || [])
       .map(
         (opt) => `
-        <div class="option id="${this.id}">
-          <p class="option-text ${(this.key === opt.id) ? "correct" : "false"}" >${opt.text}</p>
+        <div class="option" id="${this.id}-${opt.id}">
+          <p class="option-text ${(this.key === opt.id) ? "correct" : "false"}">${opt.text}</p>
           <p class="option-explanation">${opt.explanation}</p>
         </div>
       `,
@@ -43,12 +44,13 @@ class MultipleChoice extends Problem {
       <p class="problem-text">${this.text}</p>
       <div class="options">${options}</div>
     `;
-
   }
+
   render(isCheck = false) {
-    return isCheck ? this.renderExplanation(): this.renderQuestion();
+    return isCheck ? this.renderExplanation() : this.renderQuestion();
   }
   //#endregion
+
   //#region JSON
   toJSON() {
     const base = super.toJSON();
@@ -61,8 +63,7 @@ class MultipleChoice extends Problem {
 
   static fromJSON(json) {
     const options = json.option.map((optJson) => Option.fromJSON(optJson));
-
-    return new MultipleChoice(json.id, json.text, options, json.answer);
+    return new MultipleChoice(json.id, json.text, options, json.key);
   }
   //#endregion
 }

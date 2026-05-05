@@ -7,16 +7,23 @@
     <title>Memora - Result</title>
     <link rel="stylesheet" href="../../Assets/Styles/main.css">
 </head>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
 <body>
     <header>
         <h1>Memora</h1>
     </header>
-    <main>
-        <div id="score">
-            <span id="achieved-score"></span> of <span>100</span>
+    <main class="center">
+        <div>
+            <div id="score">
+                <span id="achieved-score"></span> of <span>100</span>
+            </div>
+            <div id="explanation"></div>
+            <div class="quiz-links">
+                <a href="../quiz/">Retry quiz</a>
+                <a href="../home/">New quiz</a>
+            </div>
         </div>
-        <div id="explanation"></div>
     </main>
     <footer>
         Created by JoxNeis @2026
@@ -28,6 +35,7 @@
     import ResultPageController from "./controller.js";
     document.addEventListener("DOMContentLoaded", () => {
         const controller = new ResultPageController(new QuizService());
+        MathJax.typesetPromise();
     });
 </script>
 

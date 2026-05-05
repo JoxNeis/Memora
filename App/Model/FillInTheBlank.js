@@ -7,8 +7,8 @@ class FillInTheBlank extends Problem {
     this.explanation = explanation;
   }
   //#endregion
-  //#region RENDER
 
+  //#region RENDER
   renderQuestion() {
     return `
       <p class="problem-text">${this.text}</p>
@@ -19,14 +19,15 @@ class FillInTheBlank extends Problem {
   renderExplanation() {
     return `
       <p class="problem-text">${this.text}</p>
-      <p class="problem-explanation correct">${this.key}</p>;
-      `
+      <p class="problem-explanation correct">${this.key}</p>
+    `;
   }
 
   render(isCheck = false) {
     return isCheck ? this.renderExplanation() : this.renderQuestion();
   }
   //#endregion
+
   //#region GETTER / SETTER
   get explanation() {
     return this._explanation;
@@ -38,6 +39,7 @@ class FillInTheBlank extends Problem {
     }
     this._explanation = value;
   }
+  //#endregion
 
   //#region JSON
   toJSON() {
@@ -53,7 +55,7 @@ class FillInTheBlank extends Problem {
     return new FillInTheBlank(
       json.id,
       json.text,
-      json.answer,
+      json.key,
       json.explanation,
     );
   }

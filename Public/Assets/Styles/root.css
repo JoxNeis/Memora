@@ -3,77 +3,89 @@
    Base variables, resets, and shared styles
    ============================================================ */
 
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300;1,400&family=JetBrains+Mono:wght@400;500&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300;1,400&family=JetBrains+Mono:wght@400;500&display=swap");
 
 /* ── DESIGN TOKENS ─────────────────────────────────────────── */
 :root {
-  /* Colors */
-  --color-bg:          #F5F0E8;   /* warm parchment */
-  --color-surface:     #FDFAF4;   /* slightly lighter card surface */
-  --color-surface-alt: #EDE8DC;   /* pressed / alternate surface */
-  --color-ink:         #1A1614;   /* near-black ink */
-  --color-ink-muted:   #6B6258;   /* secondary text */
-  --color-ink-faint:   #B5ADA2;   /* placeholder / disabled */
-  --color-accent:      #D4472A;   /* red ink accent */
-  --color-accent-dark: #A8341E;   /* hover state */
-  --color-correct:     #2E7D52;   /* green for correct answers */
-  --color-wrong:       #C0392B;   /* red for wrong answers */
-  --color-answered:    #5B7FA6;   /* blue for answered questions */
-  --color-border:      #CEC7BB;   /* subtle borders */
-  --color-shadow:      rgba(26, 22, 20, 0.10);
+  /* Background & Surfaces */
+  --color-bg: #fafafa; /* clean light background */
+  --color-surface: #ffffff; /* cards / surfaces */
+  --color-surface-alt: #f0f0f0; /* hover / pressed */
+
+  /* Text / Ink */
+  --color-ink: #222222; /* primary text */
+  --color-ink-muted: #666666; /* secondary text */
+  --color-ink-faint: #aaaaaa; /* placeholder / disabled */
+
+  /* Accent */
+  --color-accent: #ff6b6b; /* vibrant red accent */
+  --color-accent-dark: #e55a5a; /* hover / active state */
+
+  /* Feedback */
+  --color-correct: #28a745; /* green success */
+  --color-wrong: #dc3545; /* red error */
+  --color-answered: #1e90ff; /* blue answered */
+
+  /* Borders & Shadows */
+  --color-border: #dddddd; /* subtle borders */
+  --color-shadow: rgba(0, 0, 0, 0.08); /* modern subtle shadow */
 
   /* Typography */
-  --font-display: 'Playfair Display', Georgia, serif;
-  --font-body:    'Source Serif 4', Georgia, serif;
-  --font-mono:    'JetBrains Mono', 'Courier New', monospace;
+  --font-display:
+    "Poppins", "Segoe UI", sans-serif; /* modern serif-free for headings */
+  --font-body: "Inter", "Helvetica Neue", sans-serif; /* modern readable body */
+  --font-mono: "Fira Code", "JetBrains Mono", monospace; /* code blocks */
 
   /* Scale */
-  --text-xs:   0.75rem;    /* 12px */
-  --text-sm:   0.875rem;   /* 14px */
-  --text-base: 1rem;       /* 16px */
-  --text-md:   1.125rem;   /* 18px */
-  --text-lg:   1.375rem;   /* 22px */
-  --text-xl:   1.75rem;    /* 28px */
-  --text-2xl:  2.25rem;    /* 36px */
-  --text-3xl:  3rem;       /* 48px */
+  --text-xs: 0.75rem; /* 12px */
+  --text-sm: 0.875rem; /* 14px */
+  --text-base: 1rem; /* 16px */
+  --text-md: 1.125rem; /* 18px */
+  --text-lg: 1.375rem; /* 22px */
+  --text-xl: 1.75rem; /* 28px */
+  --text-2xl: 2.25rem; /* 36px */
+  --text-3xl: 3rem; /* 48px */
 
   /* Spacing */
-  --space-1:  0.25rem;
-  --space-2:  0.5rem;
-  --space-3:  0.75rem;
-  --space-4:  1rem;
-  --space-5:  1.25rem;
-  --space-6:  1.5rem;
-  --space-8:  2rem;
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
   --space-10: 2.5rem;
   --space-12: 3rem;
   --space-16: 4rem;
   --space-20: 5rem;
 
   /* Layout */
-  --max-width:      860px;
-  --content-width:  640px;
-  --radius-sm:      4px;
-  --radius-md:      8px;
-  --radius-lg:      14px;
-  --radius-full:    9999px;
+  --max-width: 860px;
+  --content-width: 640px;
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 14px;
+  --radius-full: 9999px;
 
   /* Motion */
-  --ease-out:  cubic-bezier(0.16, 1, 0.3, 1);
-  --ease-in:   cubic-bezier(0.4, 0, 1, 1);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in: cubic-bezier(0.4, 0, 1, 1);
   --ease-snap: cubic-bezier(0.34, 1.56, 0.64, 1);
-  --dur-fast:  120ms;
-  --dur-base:  220ms;
-  --dur-slow:  400ms;
+  --dur-fast: 120ms;
+  --dur-base: 220ms;
+  --dur-slow: 400ms;
 
   /* Shadows */
   --shadow-sm: 0 1px 3px var(--color-shadow);
-  --shadow-md: 0 4px 12px var(--color-shadow), 0 1px 3px rgba(26,22,20,0.06);
-  --shadow-lg: 0 8px 28px rgba(26,22,20,0.14), 0 2px 6px rgba(26,22,20,0.06);
+  --shadow-md: 0 4px 12px var(--color-shadow), 0 1px 3px rgba(26, 22, 20, 0.06);
+  --shadow-lg:
+    0 8px 28px rgba(26, 22, 20, 0.14), 0 2px 6px rgba(26, 22, 20, 0.06);
 }
 
 /* ── RESET ──────────────────────────────────────────────────── */
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
@@ -100,12 +112,17 @@ body {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23noise)' opacity='0.035'/%3E%3C/svg%3E");
 }
 
-img, video, svg {
+img,
+video,
+svg {
   display: block;
   max-width: 100%;
 }
 
-button, input, select, textarea {
+button,
+input,
+select,
+textarea {
   font: inherit;
   color: inherit;
 }
@@ -119,22 +136,34 @@ a:hover {
   text-decoration: underline;
 }
 
-ul, ol {
+ul,
+ol {
   list-style: none;
 }
 
 /* ── TYPOGRAPHY ─────────────────────────────────────────────── */
-h1, h2, h3, h4 {
+h1,
+h2,
+h3,
+h4 {
   font-family: var(--font-display);
   font-weight: 700;
   line-height: 1.2;
   letter-spacing: -0.01em;
 }
 
-h1 { font-size: var(--text-3xl); }
-h2 { font-size: var(--text-xl); }
-h3 { font-size: var(--text-lg); }
-h4 { font-size: var(--text-md); }
+h1 {
+  font-size: var(--text-3xl);
+}
+h2 {
+  font-size: var(--text-xl);
+}
+h3 {
+  font-size: var(--text-lg);
+}
+h4 {
+  font-size: var(--text-md);
+}
 
 p {
   line-height: 1.75;
@@ -173,7 +202,7 @@ header h1 {
 
 /* Red underline accent on the brand name */
 header h1::after {
-  content: '';
+  content: "";
   position: absolute;
   bottom: -2px;
   left: 0;
@@ -197,8 +226,11 @@ footer {
 main {
   flex: 1;
   padding-block: var(--space-10);
+  margin: auto;
 }
-
+.center {
+  justify-content: center;
+}
 /* ── CARD ───────────────────────────────────────────────────── */
 .card {
   background: var(--color-surface);
@@ -238,7 +270,7 @@ button.btn-primary,
 button#save-button,
 button#btn-next {
   background: var(--color-accent);
-  color: #FDFAF4;
+  color: #fdfaf4;
   border-color: var(--color-accent);
   box-shadow: 0 2px 0 var(--color-accent-dark);
 }
@@ -278,8 +310,9 @@ input[type="file"] {
   border-radius: var(--radius-md);
   font-size: var(--text-base);
   color: var(--color-ink);
-  transition: border-color var(--dur-fast) var(--ease-out),
-              box-shadow var(--dur-fast) var(--ease-out);
+  transition:
+    border-color var(--dur-fast) var(--ease-out),
+    box-shadow var(--dur-fast) var(--ease-out);
   outline: none;
 }
 
@@ -318,8 +351,9 @@ input[type="checkbox"] {
   border: 1.5px solid var(--color-border);
   border-radius: var(--radius-md);
   background: var(--color-surface);
-  transition: border-color var(--dur-fast) var(--ease-out),
-              background var(--dur-fast) var(--ease-out);
+  transition:
+    border-color var(--dur-fast) var(--ease-out),
+    background var(--dur-fast) var(--ease-out);
   cursor: pointer;
 }
 
@@ -342,8 +376,13 @@ input[type="checkbox"] {
 }
 
 /* ── ANSWER STATES ──────────────────────────────────────────── */
-.option-text.correct { color: var(--color-correct); font-weight: 600; }
-.option-text.false   { color: var(--color-wrong); }
+.option-text.correct {
+  color: var(--color-correct);
+  font-weight: 600;
+}
+.option-text.false {
+  color: var(--color-wrong);
+}
 
 /* ── QUESTION NUMBER GRID ───────────────────────────────────── */
 #question-grid {
@@ -363,8 +402,9 @@ input[type="checkbox"] {
   font-family: var(--font-mono);
   font-weight: 500;
   border: 1.5px solid var(--color-border);
-  transition: background var(--dur-fast) var(--ease-out),
-              border-color var(--dur-fast) var(--ease-out);
+  transition:
+    background var(--dur-fast) var(--ease-out),
+    border-color var(--dur-fast) var(--ease-out);
   cursor: default;
 }
 
@@ -376,7 +416,7 @@ input[type="checkbox"] {
 #question-grid > div.answered {
   background: var(--color-answered);
   border-color: var(--color-answered);
-  color: #FDFAF4;
+  color: #fdfaf4;
 }
 
 /* ── SCORE ──────────────────────────────────────────────────── */
@@ -429,4 +469,9 @@ input[type="checkbox"] {
 
 .animate-in {
   animation: fadeUp var(--dur-slow) var(--ease-out) both;
+}
+.quiz-links {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
 }

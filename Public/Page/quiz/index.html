@@ -11,10 +11,13 @@
     .answered {
         background-color: grey;
     }
+
     .not-answered {
         background-color: transparent;
     }
 </style>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
 <body>
     <header>
         <h1>Memora</h1>
@@ -24,13 +27,15 @@
 
         </div>
     </aside>
-    <main>
+    <main class="center">
         <div>
             <p><span id="current-problem"></span>/<span id="total-problem"></span></p>
             <p id="problem"></p>
-            <button id="btn-prev">Prev</button>
-            <button id="btn-next">Next</button>
-            <button id="btn-clear">Clear</button>
+            <div class="buttons quiz-links">
+                <button id="btn-prev">Prev</button>
+                <button id="btn-clear">Clear</button>
+                <button id="btn-next">Next</button>
+            </div>
         </div>
 
     </main>
@@ -44,6 +49,7 @@
     import QuizPageController from "./controller.js";
     document.addEventListener("DOMContentLoaded", () => {
         const controller = new QuizPageController(new QuizService());
+        MathJax.typesetPromise();
     });
 </script>
 

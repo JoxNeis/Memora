@@ -66,8 +66,7 @@ class MultipleAnswer extends Problem {
 
   static fromJSON(json) {
     const options = json.option.map((optJson) => Option.fromJSON(optJson));
-
-    return new MultipleAnswer(json.id, json.text, options, json.answer);
+    return new MultipleAnswer(json.id, json.text, options, json.key);
   }
   //#endregion
 }

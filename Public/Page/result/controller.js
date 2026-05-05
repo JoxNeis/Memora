@@ -31,7 +31,7 @@ class ResultPageController {
   renderExplanation() {
     if (!this.explanation) return;
 
-    let totalHtml = '';
+    let totalHtml = "";
     this.quiz.questionSet.problems.forEach((element) => {
       totalHtml += `
         <div class="explanation" id="${element.id}">
@@ -40,6 +40,14 @@ class ResultPageController {
         </div>`;
     });
     this.explanation.innerHTML = totalHtml;
+    MathJax.typesetPromise([this.explanation]).catch((err) =>
+      console.log(err.message),
+    );
+    requestAnimationFrame(() => {
+      MathJax.typesetPromise([this.explanation]).catch((err) =>
+        console.log(err.message),
+      );
+    });
   }
 }
 

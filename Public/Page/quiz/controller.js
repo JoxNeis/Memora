@@ -115,6 +115,12 @@ class QuizPageController {
 
     const html = problem.render();
     if (this.problemContainer) this.problemContainer.innerHTML = html;
+    MathJax.typesetPromise([problem]).catch((err) => console.log(err.message));
+    requestAnimationFrame(() => {
+      MathJax.typesetPromise([this.problemContainer]).catch((err) =>
+        console.log(err.message),
+      );
+    });
     this.attachSaveListeners(problem);
     this.restoreAnswer(problem);
   }
@@ -126,7 +132,7 @@ class QuizPageController {
 
     const inputs = this.problemContainer.querySelectorAll("input");
     if (problem.type === "FillInTheBlank" && inputs.length > 0) {
-      const input = inputs[0]; // capture reference
+      const input = inputs[0];
       input.addEventListener("input", () => {
         const response = input.value.trim();
         if (response) {
@@ -177,21 +183,20 @@ class QuizPageController {
   restoreAnswer(problem) {
     if (!this.problemContainer) return;
     const saved = this.service.work.getProblemAnswer(problem.id);
-    if (!saved) return;
+    if (!saved || saved === "not answered") return;
 
     const inputs = this.problemContainer.querySelectorAll("input");
 
     if (problem.type === "FillInTheBlank" && inputs[0]) {
-      inputs[0].value = saved.response;
+      inputs[0].value = saved;
     } else if (problem.type === "MultipleChoice") {
       inputs.forEach((radio) => {
-        radio.checked = radio.value === saved.response;
+        radio.checked = radio.value === saved;
       });
     } else if (problem.type === "MultipleAnswer") {
       inputs.forEach((checkbox) => {
         checkbox.checked =
-          Array.isArray(saved.response) &&
-          saved.response.includes(checkbox.value);
+          Array.isArray(saved) && saved.includes(checkbox.value);
       });
     }
 
@@ -199,4 +204,5 @@ class QuizPageController {
   }
   //#endregion
 }
+
 export default QuizPageController;

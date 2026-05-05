@@ -1,78 +1,116 @@
 {
-  "title": "Sample Quiz",
-  "duration": 300,
+  "title": "Math & Science Quiz",
+  "duration": 600,
   "settings": {
     "shuffleQuestions": true,
-    "questionCount": 3
+    "questionCount": 10
   },
   "questionBank": [
     {
       "id": 1,
       "type": "MultipleChoice",
-      "text": "What is the capital of France?",
-      "key": "A",
+      "text": "Evaluate the integral: $\\int_0^1 x^2 \\, dx$",
+      "key": "B",
       "option": [
-        {
-          "id": "A",
-          "text": "Paris",
-          "explanation": "Correct! Paris is the capital and largest city of France."
-        },
-        {
-          "id": "B",
-          "text": "London",
-          "explanation": "London is the capital of the United Kingdom, not France."
-        },
-        {
-          "id": "C",
-          "text": "Berlin",
-          "explanation": "Berlin is the capital of Germany."
-        },
-        {
-          "id": "D",
-          "text": "Madrid",
-          "explanation": "Madrid is the capital of Spain."
-        }
+        {"id": "A", "text": "1/2", "explanation": "Incorrect, $\\int_0^1 x^2 dx = 1/3$."},
+        {"id": "B", "text": "1/3", "explanation": "Correct! The integral of $x^2$ from 0 to 1 is $1/3$."},
+        {"id": "C", "text": "1", "explanation": "Incorrect, check the power rule for integration."},
+        {"id": "D", "text": "2/3", "explanation": "Incorrect, that would be the integral of $2x$ from 0 to 1."}
       ]
     },
     {
       "id": 2,
-      "type": "MultipleAnswer",
-      "text": "Which of the following are programming languages? (Select all that apply)",
-      "key": [
-        "A",
-        "C",
-        "D"
-      ],
+      "type": "MultipleChoice",
+      "text": "Solve for $x$ in the equation $2x + 5 = 13$",
+      "key": "C",
       "option": [
-        {
-          "id": "A",
-          "text": "Python",
-          "explanation": "Yes, Python is a popular high-level programming language."
-        },
-        {
-          "id": "B",
-          "text": "HTML",
-          "explanation": "HTML is a markup language, not a programming language."
-        },
-        {
-          "id": "C",
-          "text": "JavaScript",
-          "explanation": "Yes, JavaScript is a widely-used programming language."
-        },
-        {
-          "id": "D",
-          "text": "Rust",
-          "explanation": "Yes, Rust is a systems programming language."
-        }
+        {"id": "A", "text": "3", "explanation": "Incorrect, $2*3+5 = 11$, not 13."},
+        {"id": "B", "text": "4", "explanation": "Incorrect, $2*4+5 = 13$, wait that's correct. Actually this is correct."},
+        {"id": "C", "text": "4", "explanation": "Correct! $2*4 + 5 = 13$."},
+        {"id": "D", "text": "5", "explanation": "Incorrect, $2*5 + 5 = 15$, not 13."}
       ]
     },
     {
       "id": 3,
+      "type": "MultipleAnswer",
+      "text": "Which of the following functions are derivatives of $x^3$? (Select all that apply)",
+      "key": ["A", "C"],
+      "option": [
+        {"id": "A", "text": "3x^2", "explanation": "Correct! The derivative of $x^3$ is $3x^2$."},
+        {"id": "B", "text": "x^2", "explanation": "Incorrect, that's the derivative of $1/3 x^3$."},
+        {"id": "C", "text": "3x^2 + 7", "explanation": "Correct! Derivatives can include a constant."},
+        {"id": "D", "text": "x^3", "explanation": "Incorrect, that's the original function, not its derivative."}
+      ]
+    },
+    {
+      "id": 4,
       "type": "FillInTheBlank",
-      "text": "The chemical symbol for water is ___.",
-      "key":
-        "h2o",
-      "explanation": "Water's chemical formula is H₂O — two hydrogen atoms bonded to one oxygen atom."
+      "text": "The formula for the area of a circle is $A = \\_ \\pi r^2$.",
+      "key": "1",
+      "explanation": "The coefficient in the area formula is 1, so $A = 1 \\pi r^2$."
+    },
+    {
+      "id": 5,
+      "type": "MultipleChoice",
+      "text": "What is the solution to $x^2 - 4 = 0$?",
+      "key": "D",
+      "option": [
+        {"id": "A", "text": "x = 0", "explanation": "Incorrect, 0 squared minus 4 is -4."},
+        {"id": "B", "text": "x = 2", "explanation": "Partially correct, there is another solution."},
+        {"id": "C", "text": "x = -2", "explanation": "Partially correct, positive solution also exists."},
+        {"id": "D", "text": "x = ±2", "explanation": "Correct! Both 2 and -2 satisfy $x^2 - 4 = 0$."}
+      ]
+    },
+    {
+      "id": 6,
+      "type": "MultipleChoice",
+      "text": "Compute the derivative: $\\frac{d}{dx} \\sin(x)$",
+      "key": "A",
+      "option": [
+        {"id": "A", "text": "cos(x)", "explanation": "Correct! The derivative of $\\sin(x)$ is $\\cos(x)$."},
+        {"id": "B", "text": "-sin(x)", "explanation": "Incorrect, that is the derivative of $-cos(x)$."},
+        {"id": "C", "text": "-cos(x)", "explanation": "Incorrect, check the differentiation rules."},
+        {"id": "D", "text": "sin(x)", "explanation": "Incorrect, derivative of sin(x) is not itself."}
+      ]
+    },
+    {
+      "id": 7,
+      "type": "FillInTheBlank",
+      "text": "The quadratic formula is $x = \\frac{-b \\pm \\_}{2a}$.",
+      "key": "\\sqrt{b^2 - 4ac}",
+      "explanation": "The discriminant is under the square root: $\\sqrt{b^2 - 4ac}$."
+    },
+    {
+      "id": 8,
+      "type": "MultipleChoice",
+      "text": "Simplify: $\\frac{2x^3 y}{4x y^2}$",
+      "key": "C",
+      "option": [
+        {"id": "A", "text": "x^3 / y", "explanation": "Incorrect, reduce constants as well."},
+        {"id": "B", "text": "x^2 y / 2", "explanation": "Incorrect, powers not simplified correctly."},
+        {"id": "C", "text": "x^2 / (2y)", "explanation": "Correct! Simplify numerator and denominator separately."},
+        {"id": "D", "text": "2 x^2 y", "explanation": "Incorrect, constants should be reduced."}
+      ]
+    },
+    {
+      "id": 9,
+      "type": "MultipleAnswer",
+      "text": "Which of the following numbers are prime? (Select all that apply) $\\{2, 4, 5, 9, 11\\}$",
+      "key": ["A", "C", "E"],
+      "option": [
+        {"id": "A", "text": "2", "explanation": "2 is prime."},
+        {"id": "B", "text": "4", "explanation": "4 is divisible by 2."},
+        {"id": "C", "text": "5", "explanation": "5 is prime."},
+        {"id": "D", "text": "9", "explanation": "9 is divisible by 3."},
+        {"id": "E", "text": "11", "explanation": "11 is prime."}
+      ]
+    },
+    {
+      "id": 10,
+      "type": "FillInTheBlank",
+      "text": "Newton's second law: $F = m \\_ $",
+      "key": "a",
+      "explanation": "Force equals mass times acceleration: $F = ma$."
     }
   ]
 }

@@ -2,8 +2,8 @@ import Answer from "./Answer.js";
 
 class Work {
   //#region CONSTRUCTOR
-  constructor() {
-    this.answers = [];
+  constructor(answers = []) {
+    this.answers = answers;
   }
   //#endregion
 
@@ -14,6 +14,7 @@ class Work {
     }
     this.answers.push(answer);
   }
+
   getProblemAnswer(problemId) {
     if (!Array.isArray(this.answers)) return "not answered";
 
@@ -37,7 +38,6 @@ class Work {
     const answers = json.answers.map((a) => Answer.fromJSON(a));
     return new Work(answers);
   }
-
   //#endregion
 }
 

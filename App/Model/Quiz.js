@@ -102,7 +102,7 @@ class Quiz {
     return new Quiz(
       json.title,
       ProblemSet.fromJSON(json.questionBank),
-      json.duration,
+      json.timeLimit ?? json.duration,  
       json.settings
     );
   }
