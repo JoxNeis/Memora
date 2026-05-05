@@ -1,19 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Memora - Quiz</title>
+    <title>Memora - Result</title>
 </head>
+
 <body>
     <header>
-
+        <h1>Memora</h1>
     </header>
-    <aside>
-
-    </aside>
     <main>
-        
+        <div id="score">
+            <span id="achieved-score"></span> of <span>100</span>
+        </div>
+        <div id="explanation"></div>
     </main>
+    <footer>
+        Created by JoxNeis @2026
+    </footer>
 </body>
+
+<script type="module">
+    import QuizService from "../../../App/Service/QuizService.js";
+    import ResultPageController from "./controller.js";
+    document.addEventListener("DOMContentLoaded", () => {
+        const controller = new ResultPageController(new QuizService());
+    });
+</script>
+
 </html>

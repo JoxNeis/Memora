@@ -1,46 +1,68 @@
 import Quiz from "../../../App/Model/Quiz.js";
 import QuizService from "../../../App/Service/QuizService.js";
 import Answer from "../../../App/Model/Answer.js";
+import Work from "../../../App/Model/Work.js";
 
 class QuizPageController {
   //#region CONSTRUCTOR
   /**
-   * 
-   * @param {QuizService} service 
+   * @param {QuizService} service
    */
   constructor(service) {
     this.service = service;
+    this.service.work = new Work();
     this.quiz = this.service.quiz;
-    this.problems = this.quiz.questionSet.problems;
+    if (this.quiz === null) {
+      window.location.href = "../home/";
+    }
+    this.problems = this.quiz.questionSet.problems || [];
     this.currentIndex = 0;
-    /*
-    this.problemContainer = document.getElementById("problem");
-    this.currentLabel = document.getElementById("current-problem");
-    this.totalLabel = document.getElementById("total-problem");
-    this.btnNext = document.getElementById("btn-next");
-    this.btnPrev = document.getElementById("btn-prev");
 
     this.init();
-    */
   }
   //#endregion
 
-  //#region GETTER/SETTER
-  get currentProblem(){
-    return this.problems[this.currentIndex];
+  //#region GETTER
+  get currentProblem() {
+    return this.problems[this.currentIndex] || null;
+  }
+
+  get isLastProblem() {
+    return this.currentIndex === this.problems.length - 1;
   }
   //#endregion
 
   //#region INIT
   init() {
-    this.btnNext.addEventListener("click", () => this.handleNext());
-    this.btnPrev.addEventListener("click", () => this.handlePrev());
+    this.questionNumberGrid = document.getElementById("question-grid");
+    this.problemContainer = document.getElementById("problem");
+    this.currentLabel = document.getElementById("current-problem");
+    this.totalLabel = document.getElementById("total-problem");
+    this.btnNext = document.getElementById("btn-next");
+    this.btnPrev = document.getElementById("btn-prev");
+    this.btnClear = document.getElementById("btn-clear");
+    this.addFunctionality();
+  }
+
+  addFunctionality() {
+    if (this.btnNext)
+      this.btnNext.addEventListener("click", () => this.handleNext());
+    if (this.btnPrev)
+      this.btnPrev.addEventListener("click", () => this.handlePrev());
+    if (this.btnClear)
+      this.btnClear.addEventListener("click", () => this.clearAnswer());
+
+    this.renderQuestionNumberGrid();
     this.renderQuestion();
   }
   //#endregion
 
-  //#region NAVIGATION
+  //#region BUTTON NAVIGATION
   handleNext() {
+    if (this.isLastProblem) {
+      this.handleSubmit();
+      return;
+    }
     if (this.currentIndex < this.problems.length - 1) {
       this.currentIndex++;
       this.renderQuestion();
@@ -54,92 +76,73 @@ class QuizPageController {
     }
   }
 
-  isLastProblem() {
-    return this.currentIndex === this.problems.length - 1;
+  handleSubmit() {
+    window.location.href = "../result/";
   }
   //#endregion
 
   //#region RENDER
+  renderQuestionNumberGrid() {
+    if (!this.questionNumberGrid) return;
+    this.questionNumberGrid.innerHTML = "";
+    this.problems.forEach((problem, i) => {
+      this.questionNumberGrid.innerHTML += `<div id="${problem.id}" class="not-answered">${i + 1}</div>`;
+    });
+  }
+
+  renderQuestionNumberGridAnswered(problem) {
+    const el = document.getElementById(problem.id);
+    if (!el) return;
+    el.classList.add("answered");
+    el.classList.remove("not-answered");
+  }
+
+  renderQuestionNumberGridNone(problem) {
+    const el = document.getElementById(problem.id);
+    if (!el) return;
+    el.classList.add("not-answered");
+    el.classList.remove("answered");
+  }
+
   renderQuestion() {
     const problem = this.currentProblem;
-    this.currentLabel.innerText = this.currentIndex + 1;
-    this.totalLabel.innerText = this.problems.length;
-    this.btnNext.innerText = this.isLastProblem() ? "Submit" : "Next";
+    if (!problem) return;
 
-    switch (problem.type) {
-      case "MultipleChoice":
-        this.problemContainer.innerHTML = this.renderMultipleChoice(problem);
-        break;
-      case "MultipleAnswer":
-        this.problemContainer.innerHTML = this.renderMultipleAnswer(problem);
-        break;
-      case "FillInTheBlank":
-        this.problemContainer.innerHTML = this.renderFillInTheBlank(problem);
-        break;
-      default:
-        throw new Error(`Unknown problem type: ${problem.type}`);
-    }
+    if (this.currentLabel) this.currentLabel.innerText = this.currentIndex + 1;
+    if (this.totalLabel) this.totalLabel.innerText = this.problems.length;
+    if (this.btnNext)
+      this.btnNext.innerText = this.isLastProblem ? "Submit" : "Next";
+
+    const html = problem.render();
+    if (this.problemContainer) this.problemContainer.innerHTML = html;
     this.attachSaveListeners(problem);
     this.restoreAnswer(problem);
-  }
-
-  renderMultipleChoice(problem) {
-    const options = problem.option
-      .map((opt) => `
-        <label>
-          <input type="radio" name="${problem.id}" value="${opt.id}">
-          ${opt.text}
-        </label>
-      `)
-      .join("");
-    return `
-      <p class="problem-text">${problem.text}</p>
-      <div class="options">${options}</div>
-    `;
-  }
-
-  renderMultipleAnswer(problem) {
-    const options = problem.option
-      .map((opt) => `
-        <label>
-          <input type="checkbox" name="${problem.id}" value="${opt.id}">
-          ${opt.text}
-        </label>
-      `)
-      .join("");
-    return `
-      <p class="problem-text">${problem.text}</p>
-      <div class="options">${options}</div>
-    `;
-  }
-
-  renderFillInTheBlank(problem) {
-    return `
-      <p class="problem-text">${problem.text}</p>
-      <input type="text" name="${problem.id}" placeholder="Your answer…">
-    `;
   }
   //#endregion
 
   //#region SAVE & RESTORE
   attachSaveListeners(problem) {
-    const inputs = this.problemContainer.querySelectorAll("input");
+    if (!this.problemContainer) return;
 
-    if (problem.type === "FillInTheBlank") {
-      inputs[0].addEventListener("input", () => {
-        const response = inputs[0].value;
-        if (response !== "") {
+    const inputs = this.problemContainer.querySelectorAll("input");
+    if (problem.type === "FillInTheBlank" && inputs.length > 0) {
+      const input = inputs[0]; // capture reference
+      input.addEventListener("input", () => {
+        const response = input.value.trim();
+        if (response) {
           this.service.saveAnswer(new Answer(problem.id, response));
+          this.renderQuestionNumberGridAnswered(problem);
+        } else {
+          this.renderQuestionNumberGridNone(problem);
         }
       });
-
     } else if (problem.type === "MultipleChoice") {
       inputs.forEach((radio) => {
         radio.addEventListener("change", () => {
           this.service.saveAnswer(new Answer(problem.id, radio.value));
+          this.renderQuestionNumberGridAnswered(problem);
         });
       });
-
     } else if (problem.type === "MultipleAnswer") {
       inputs.forEach((checkbox) => {
         checkbox.addEventListener("change", () => {
@@ -149,35 +152,51 @@ class QuizPageController {
 
           if (selected.length > 0) {
             this.service.saveAnswer(new Answer(problem.id, selected));
+            this.renderQuestionNumberGridAnswered(problem);
+          } else {
+            this.renderQuestionNumberGridNone(problem);
           }
         });
       });
     }
   }
 
+  clearAnswer() {
+    const problem = this.currentProblem;
+    if (!problem || !this.problemContainer) return;
+    const inputs = this.problemContainer.querySelectorAll("input");
+    if (problem.type === "FillInTheBlank" && inputs[0]) {
+      inputs[0].value = "";
+    } else {
+      inputs.forEach((input) => (input.checked = false));
+    }
+    this.service.work.removeAnswer(problem.id);
+    this.renderQuestionNumberGridNone(problem);
+  }
+
   restoreAnswer(problem) {
-    const work = this.service.work;
-    const saved = work.getProblemAnswer(problem.id);
+    if (!this.problemContainer) return;
+    const saved = this.service.work.getProblemAnswer(problem.id);
     if (!saved) return;
 
     const inputs = this.problemContainer.querySelectorAll("input");
 
-    if (problem.type === "FillInTheBlank") {
+    if (problem.type === "FillInTheBlank" && inputs[0]) {
       inputs[0].value = saved.response;
-
     } else if (problem.type === "MultipleChoice") {
       inputs.forEach((radio) => {
         radio.checked = radio.value === saved.response;
       });
-
     } else if (problem.type === "MultipleAnswer") {
       inputs.forEach((checkbox) => {
-        checkbox.checked = Array.isArray(saved.response)
-          && saved.response.includes(checkbox.value);
+        checkbox.checked =
+          Array.isArray(saved.response) &&
+          saved.response.includes(checkbox.value);
       });
     }
+
+    this.renderQuestionNumberGridAnswered(problem);
   }
   //#endregion
 }
-
 export default QuizPageController;

@@ -35,7 +35,11 @@ class Problem {
   }
 
   //#endregion
-
+  //#region RENDER
+  render(isCheck=false){
+    throw new Error("Must be inheritted");
+  }
+  //#endregion
   //#region JSON
   toJSON() {
     return {

@@ -1,19 +1,38 @@
-import Problem from './Problem.js';
+import Problem from "./Problem.js";
 
 class FillInTheBlank extends Problem {
   //#region CONSTRUCTOR
-  constructor(id, text, answer,explanation) {
+  constructor(id, text, answer, explanation) {
     super(id, text, answer);
     this.explanation = explanation;
   }
   //#endregion
+  //#region RENDER
 
+  renderQuestion() {
+    return `
+      <p class="problem-text">${this.text}</p>
+      <input type="text" name="${this.id}" placeholder="Your answer…">
+    `;
+  }
+
+  renderExplanation() {
+    return `
+      <p class="problem-text">${this.text}</p>
+      <p class="problem-explanation correct">${this.key}</p>;
+      `
+  }
+
+  render(isCheck = false) {
+    return isCheck ? this.renderExplanation() : this.renderQuestion();
+  }
+  //#endregion
   //#region GETTER / SETTER
-  get explanation(){
+  get explanation() {
     return this._explanation;
   }
 
-  set explanation(value){
+  set explanation(value) {
     if (typeof value !== "string" && value === "") {
       throw new Error("FillInTheBlank explanation can't be empty");
     }
@@ -26,7 +45,7 @@ class FillInTheBlank extends Problem {
 
     return {
       ...base,
-      explanation: this.explanation
+      explanation: this.explanation,
     };
   }
 
@@ -35,7 +54,7 @@ class FillInTheBlank extends Problem {
       json.id,
       json.text,
       json.answer,
-      json.explanation
+      json.explanation,
     );
   }
   //#endregion

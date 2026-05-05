@@ -70,10 +70,8 @@
       "id": 3,
       "type": "FillInTheBlank",
       "text": "The chemical symbol for water is ___.",
-      "key": [
-        "H2O",
-        "h2o"
-      ],
+      "key":
+        "h2o",
       "explanation": "Water's chemical formula is H₂O — two hydrogen atoms bonded to one oxygen atom."
     }
   ]

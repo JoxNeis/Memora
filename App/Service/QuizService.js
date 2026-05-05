@@ -5,42 +5,64 @@ import Answer from "../Model/Answer.js";
 import StorageService from "./StorageService.js";
 
 class QuizService {
-  //#region CONSTRUCTOR
+  //#region CONSTRUCTOr
   constructor() {
     this.quizPath = "quiz";
     this.workPath = "work";
+    this._workCache = null;
   }
   //#endregion
-
   //#region GETTER / SETTER
   get quiz() {
     const data = StorageService.loadFileFromSession(this.quizPath);
-    return Quiz.fromJSON(JSON.parse(data));
+    if (!data) return null;
+
+    try {
+      return Quiz.fromJSON(JSON.parse(data));
+    } catch {
+      return null;
+    }
   }
 
   set quiz(value) {
-    StorageService.saveFileToSession(this.quizPath, value);
-  }
-
-  get questionSet() {
-    return this.quiz.questionSet;
+    StorageService.saveObjectToSession(this.quizPath, value);
   }
 
   get work() {
+    if (this._workCache) return this._workCache;
     const data = StorageService.loadFileFromSession(this.workPath);
-    return Work.fromJSON(JSON.parse(data));
+    if (!data) {
+      this._workCache = new Work();
+      return this._workCache;
+    }
+
+    try {
+      this._workCache = Work.fromJSON(JSON.parse(data));
+    } catch {
+      this._workCache = new Work();
+    }
+
+    return this._workCache;
   }
 
   set work(value) {
-    StorageService.saveFileToSession(this.workPath, value);
+    this._workCache = value;
+    StorageService.saveObjectToSession(this.workPath, value);
   }
   //#endregion
-
-  //#region UTILITIES
+  //#region SAVE
   saveAnswer(answer) {
-    let work = this.work;
+    const work = this.work;
     work.addAnswer(answer);
     this.work = work;
+  }
+
+  saveQuiz(file) {
+    StorageService.saveFileToSession(this.quizPath, file);
+  }
+
+  grade(){
+    
   }
   //#endregion
 }

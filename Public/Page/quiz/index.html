@@ -6,26 +6,43 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Memora - Quiz</title>
 </head>
-
+<style>
+    .answered {
+        background-color: grey;
+    }
+    .not-answered {
+        background-color: transparent;
+    }
+</style>
 <body>
     <header>
-
+        <h1>Memora</h1>
     </header>
     <aside>
+        <div id="question-grid">
 
+        </div>
     </aside>
     <main>
+        <div>
+            <p><span id="current-problem"></span>/<span id="total-problem"></span></p>
+            <p id="problem"></p>
+            <button id="btn-prev">Prev</button>
+            <button id="btn-next">Next</button>
+            <button id="btn-clear">Clear</button>
+        </div>
 
     </main>
+    <footer>
+        Created by JoxNeis @2026
+    </footer>
 </body>
 <script type="module" src="controller.js"></script>
 <script type="module">
     import QuizService from "../../../App/Service/QuizService.js";
     import QuizPageController from "./controller.js";
-
     document.addEventListener("DOMContentLoaded", () => {
         const controller = new QuizPageController(new QuizService());
-        console.log(controller.service.quiz.toJSON());
     });
 </script>
 

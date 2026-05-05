@@ -10,7 +10,49 @@ class MultipleAnswer extends Problem {
   }
   //#endregion
 
-  
+  //#region RENDER
+  renderQuestion() {
+    const options = (this.option || [])
+      .map(
+        (opt) => `
+        <div class="option">
+          <input type="checkbox" id="${this.id}-${opt.id}" name="${this.id}" value="${opt.id}">
+          <label for="${this.id}-${opt.id}">${opt.text}</label>
+        </div>
+      `,
+      )
+      .join("");
+
+    return `
+    <p class="problem-text">${this.text}</p>
+    <div class="options">${options}</div>
+  `;
+  }
+
+  renderExplanation() {
+    const options = (this.option || [])
+      .map(
+        (opt) => `
+        <div class="option" id="${this.id}-${opt.id}">
+          <p class="option-text ${Array.isArray(this.key) && this.key.includes(opt.id) ? "correct" : "false"}">
+            ${opt.text}
+          </p>
+          <p class="option-explanation">${opt.explanation}</p>
+        </div>
+      `,
+      )
+      .join("");
+
+    return `
+    <p class="problem-text">${this.text}</p>
+    <div class="options">${options}</div>
+  `;
+  }
+
+  render(isCheck = false) {
+    return isCheck ? this.renderExplanation() : this.renderQuestion();
+  }
+  //#endregion
 
   //#region JSON
   toJSON() {

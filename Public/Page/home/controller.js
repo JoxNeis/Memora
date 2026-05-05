@@ -19,7 +19,7 @@ class HomePageController {
     this.uploadContainer.addEventListener("click", () =>
       this.inputFile.click(),
     );
-    this.inputFile.addEventListener("change", (e) => (this.service.quiz = e.target.files[0]));
+    this.inputFile.addEventListener("change", (e) => (this.service.saveQuiz(e.target.files[0])));
     this.saveButton.addEventListener("click",this.startQuiz);
   }
   //#endregion

@@ -13,6 +13,9 @@ class StorageService {
     };
     reader.readAsText(file);
   }
+  static saveObjectToSession(key, obj) {
+    sessionStorage.setItem(key, JSON.stringify(obj));
+  }
   static loadFileFromSession(fileName) {
     return sessionStorage.getItem(fileName);
   }

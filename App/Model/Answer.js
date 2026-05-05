@@ -23,16 +23,19 @@ class Answer {
 
   set response(value) {
     const isEmptyArray = Array.isArray(value) && value.length === 0;
-    const isEmptyValue = value == null || value === "";
-
-    if (isEmptyArray || isEmptyValue) {
-      throw new Error("Answer response cannot be empty");
+    if(isEmptyArray){
+      
     }
     this._response = value;
   }
 
   //#endregion
 
+  //#region UTILS
+  addAnswers(response){
+    this.response.push(response);
+  }
+  //#endregion
 
   //#region JSON
   toJSON() {
