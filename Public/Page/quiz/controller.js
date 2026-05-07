@@ -16,6 +16,7 @@ class QuizPageController {
       window.location.href = "../home/";
     }
     this.problems = this.quiz.questionSet.problems || [];
+    this.service.problemSet = this.problems;
     this.currentIndex = 0;
 
     this.init();
@@ -77,6 +78,7 @@ class QuizPageController {
   }
 
   handleSubmit() {
+    this.service.problemSet = this.problems;
     window.location.href = "../result/";
   }
   //#endregion

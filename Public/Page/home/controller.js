@@ -11,6 +11,7 @@ class HomePageController {
     this.inputFile = document.getElementById("input-file");
     this.saveButton = document.getElementById("save-button");
     this.uploaded = document.getElementById("uploaded");
+    this.downloadButton = document.getElementById("download-button");
     this.init();
   }
   //#endregion
@@ -22,6 +23,9 @@ class HomePageController {
     );
     this.inputFile.addEventListener("change", (e) => this.saveQuiz(e));
     this.saveButton.addEventListener("click", () => this.startQuiz());
+    this.downloadButton.addEventListener("click", () =>
+      this.downloadTemplate(),
+    );
   }
   //#endregion
 
@@ -35,6 +39,28 @@ class HomePageController {
   }
   startQuiz() {
     window.location.href = "../quiz/";
+  }
+
+  downloadTemplate() {
+    const path = "../../../App/Storage/template.json";
+
+    // Fetch the JSON file
+    fetch(path)
+      .then((response) => {
+        if (!response.ok) throw new Error("File not found");
+        return response.blob(); // get file as Blob
+      })
+      .then((blob) => {
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "template.json";
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        URL.revokeObjectURL(url);
+      })
+      .catch((err) => console.error("Download failed:", err));
   }
   //#endregion
 }

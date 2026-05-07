@@ -9,6 +9,7 @@ class QuizService {
   constructor() {
     this.quizPath = "quiz";
     this.workPath = "work";
+    this.problemSetPath = "problem_set";
     this._workCache = null;
   }
   //#endregion
@@ -49,6 +50,21 @@ class QuizService {
     this._workCache = value;
     StorageService.saveObjectToSession(this.workPath, value);
   }
+
+  get problemSet() {
+    const data = StorageService.loadFileFromSession(this.problemSetPath);
+    if (!data) return null;
+
+    try {
+      return ProblemSet.fromJSON(JSON.parse(data));
+    } catch {
+      return null;
+    }
+  }
+
+  set problemSet(value) {
+    StorageService.saveObjectToSession(this.problemSetPath, value);
+  }
   //#endregion
   //#region SAVE
   saveAnswer(answer) {
@@ -59,10 +75,6 @@ class QuizService {
 
   saveQuiz(file) {
     StorageService.saveFileToSession(this.quizPath, file);
-  }
-
-  grade(){
-    
   }
   //#endregion
 }

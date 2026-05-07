@@ -8,11 +8,10 @@ class ResultPageController {
   constructor(service) {
     this.service = service;
     this.work = this.service.work;
-    this.quiz = this.service.quiz;
-    if (!this.quiz) {
+    if (!this.service.problemSet) {
       window.location.href = "../home/";
     }
-    this.checker = new Checker(this.quiz.questionSet, this.work);
+    this.checker = new Checker(this.service.problemSet, this.work);
     this.grade = this.checker.grade();
     this.init();
     this.render();
@@ -32,7 +31,7 @@ class ResultPageController {
     if (!this.explanation) return;
 
     let totalHtml = "";
-    this.quiz.questionSet.problems.forEach((element) => {
+    this.service.problemSet.problems.forEach((element) => {
       totalHtml += `
         <div class="explanation" id="${element.id}">
           ${element.render(true)}
